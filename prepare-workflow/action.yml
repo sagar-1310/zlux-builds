@@ -64,3 +64,4 @@ runs:
           | sed 's/[",]//g')
         echo $ZOWE_VERSION
         rm -rf zowe-install-packaging
+      shell: bash
