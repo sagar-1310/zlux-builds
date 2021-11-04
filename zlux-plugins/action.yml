@@ -1,0 +1,67 @@
+name: "Build and Test plugins"
+description: "This action helps build and test all the zlux plugins"
+inputs:
+  build-zss:
+    description: 'Does plugins contains zss code'
+    required: true
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'checkout'
+      run: |
+        cd ..
+        export MVD_HOME_DIR=$(pwd) 
+        echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
+        git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
+        npm config set registry https://zowe.jfrog.io/zowe/api/npm/npm-release/
+        mkdir zlux
+        cp -rf $REPOSITORY_NAME zlux/
+        cd zlux
+        ls
+        git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-platform.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
+      shell: bash
+  
+    
+    - name: 'npm ci'
+      run: |
+        cd ../zlux/zlux-app-manager/virtual-desktop && npm ci
+      shell: bash
+    
+    - name: 'build plugin'
+      run: |
+        cd ../zlux
+        export MVD_DESKTOP_DIR=$(pwd)/zlux-app-manager/virtual-desktop
+        echo $MVD_DESKTOP_DIR
+        packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
+        for package in $packages
+        do
+          sh -c "cd `dirname $package` && npm ci && npm run build "
+        done
+      shell: bash
+      
+    - name: 'test'
+      run: |
+        cd ../zlux
+        packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
+        for package in $packages
+        do
+          sh -c "cd `dirname $package` && npm test "
+        done
+      shell: bash
+    
+    - name: 'remove source code'
+      run: |
+        cd ../zlux/zlux-build 
+        ant removeSource
+      shell: bash
+      
+    - name: 'package tar'
+      run: |
+        cd ../zlux/$REPOSITORY_NAME && tar cf ../../plugin.tar -H ustar *
+        cd ../zlux-build && tar cf ../../zlux-build.tar -H ustar *
+      shell: bash
+ 
