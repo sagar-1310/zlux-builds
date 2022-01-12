@@ -1,0 +1,26 @@
+{
+  "name": "zlux-builds",
+  "version": "1.0.0",
+  "description": "A project containing global setup code for zowe actions",
+  "scripts": {
+    "build": "npm update && ./ncc-build-all.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zowe-actions/zlux-builds.git"
+  },
+  "author": "Rocket",
+  "license": "EPL-2.0",
+  "bugs": {
+    "url": "https://github.com/zowe-actions/zlux-builds/issues"
+  },
+  "homepage": "https://github.com/zowe-actions/zlux-builds#readme",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "debug": "^4.3.2",
+    "glob": "^7.1.7",
+    "js-yaml": "^4.1.0",
+    "semver": "^7.3.5",
+    "zowe-common": "zowe-actions/zowe-common"
+  }
+}
