@@ -34,6 +34,7 @@ runs:
     - name: 'build plugin'
       run: |
         cd ../zlux
+        git config --list --show-origin
         export MVD_DESKTOP_DIR=$(pwd)/zlux-app-manager/virtual-desktop
         echo $MVD_DESKTOP_DIR
         packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
