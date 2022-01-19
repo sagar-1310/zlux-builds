@@ -1,0 +1,50 @@
+name: "Build and Test core"
+description: "This action helps build and test zlux-core"
+inputs:
+  build-zss:
+    description: 'Does plugins contains zss code'
+    required: false
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'checkout'
+      run: |
+        cd ..
+        mkdir zlux && cd zlux
+        git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-app-server.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-platform.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-server-framework.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-shared.git -b $DEFAULT_PLUGIN_BRANCH
+        
+    - name: 'set version'
+      run: |
+        version=$(echo $ZOWE_VERSION | grep -o '[^-]*$')
+        MAJOR_VERSION=$(echo $version | cut -d. -f1)
+        MINOR_VERSION=$(echo $version | cut -d. -f2)
+        REVISION=$(echo $version | cut -d. -f3)
+        cd ../zlux/zlux-build
+        sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \\
+                 -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \\
+                 -e "s/REVISION=4/REVISION=${microVersion}/" \\
+                  version.properties
+          echo "Set version to:"
+          cat version.properties
+          cd ../zlux-app-server
+          if [ -e "manifest.yaml" ]; then
+            export commit_hash=\$(git rev-parse --verify HEAD)
+            export current_timestamp=\$(date +%s%3N)
+            export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
+            sed -i -e "s|{{build\\.branch}}|${BRANCH_NAME}|g" \\
+                   -e "s|{{build\\.number}}|${BUILD_NUMBER}|g" \\
+                   -e "s|{{build\\.commitHash}}|\${commit_hash}|g" \\
+                   -e "s|{{build\\.timestamp}}|\${current_timestamp}|g" \\
+                   -e "s|{{build\\.version}}|\${zlux_version}|g" \\
+                   "manifest.yaml"
+            echo "manifest is:"
+            cat manifest.yaml
+          fi
+      shell: bash    
