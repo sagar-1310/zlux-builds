@@ -30,9 +30,9 @@ runs:
         cd ../zlux/zlux-build
         ls
         echo $majorVersion
-        sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \\
-                 -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \\
-                 -e "s/REVISION=4/REVISION=${microVersion}/" \\
+        sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \
+                 -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \
+                 -e "s/REVISION=4/REVISION=${microVersion}/" \
                   version.properties
           echo "Set version to:"
           cat version.properties
