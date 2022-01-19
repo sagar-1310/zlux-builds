@@ -24,9 +24,9 @@ runs:
     - name: 'set version'
       run: |
         version=$(echo $ZOWE_VERSION | grep -o '[^-]*$')
-        MAJOR_VERSION=$(echo $version | cut -d. -f1)
-        MINOR_VERSION=$(echo $version | cut -d. -f2)
-        REVISION=$(echo $version | cut -d. -f3)
+        majorVersion=$(echo $version | cut -d. -f1)
+        minorVersion=$(echo $version | cut -d. -f2)
+        microVersion=$(echo $version | cut -d. -f3)
         cd ../zlux/zlux-build
         sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \\
                  -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \\
