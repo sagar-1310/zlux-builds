@@ -28,6 +28,8 @@ runs:
         minorVersion=$(echo $version | cut -d. -f2)
         microVersion=$(echo $version | cut -d. -f3)
         cd ../zlux/zlux-build
+        ls
+        echo $majorVersion
         sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \\
                  -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \\
                  -e "s/REVISION=4/REVISION=${microVersion}/" \\
