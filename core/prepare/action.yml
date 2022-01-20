@@ -37,6 +37,11 @@ runs:
         fi
       shell: bash
     
+    - name: 'setup apt-get'
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y ant-contrib tart
+      shell: bash
     
     - name: 'export github username and email'
       run: |
