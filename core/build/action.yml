@@ -50,4 +50,11 @@ runs:
             echo "manifest is:"
             cat manifest.yaml
           fi
-      shell: bash    
+      shell: bash  
+
+    - name: 'build'
+      run: |
+        bash -c 'cd ../zlux/zlux-build && \
+            set -o pipefail && \
+            ant testing 2>&1 | grep -vE \"^\\s+\\[exec\\]\\s+0\\% compiling\"'
+      shell: bash 
