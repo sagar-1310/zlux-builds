@@ -43,9 +43,9 @@ runs:
             echo $current_timestamp
             sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
                    -e "s|{{build\\.number}}|101|g" \
-                   -e "s|{{build\\.commitHash}}|\${commit_hash}|g" \
-                   -e "s|{{build\\.timestamp}}|\${current_timestamp}|g" \
-                   -e "s|{{build\\.version}}|\${ZOWE_VERSION}|g" \
+                   -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
+                   -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
+                   -e "s|{{build\\.version}}|${ZOWE_VERSION}|g" \
                    "manifest.yaml"
             echo "manifest is:"
             cat manifest.yaml
