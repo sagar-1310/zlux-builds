@@ -57,3 +57,18 @@ runs:
         cd ../zlux/zlux-build
         bash -c set -o pipefail && ant testing 2>&1 | grep -vE "^\s+\[exec\]\s+0\% compiling"
       shell: bash 
+
+    - name: 'test'
+      run: |
+        ls
+        pwd
+        cd ..
+        ls
+        pwd
+        cd dist
+        packages=\$(find ./zlux-app-manager -name package.json | { grep -v node_modules || true; })
+        for package in \$packages
+        do
+            sh -c "cd `dirname \$package` && npm run test --if-present"
+        done
+      shell: bash 
