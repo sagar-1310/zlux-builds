@@ -41,8 +41,8 @@ runs:
             export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
             echo $commit_hash
             echo $current_timestamp
-            sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
-                   -e "s|{{build\\.number}}|101|g" \
+            sed -i -e "s|{{build\\.branch}}|${DEFAULT_PLUGIN_BRANCH}|g" \
+                   -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
                    -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
                    -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
                    -e "s|{{build\\.version}}|${ZOWE_VERSION}|g" \
