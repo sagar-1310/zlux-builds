@@ -39,6 +39,8 @@ runs:
             export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
             export current_timestamp=$(date +%s%3N)
             export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
+            echo $commit_hash
+            echo $current_timestamp
             sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
                    -e "s|{{build\\.number}}|101|g" \
                    -e "s|{{build\\.commitHash}}|\${commit_hash}|g" \
