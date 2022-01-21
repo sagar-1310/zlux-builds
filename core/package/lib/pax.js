@@ -26,6 +26,7 @@ class pax{
 		const jclBuildNumber = args.get('jclBuildNumber')
 		const paxName = args.get('paxName')
 		const mvdHomeDir = args.get('mvdHomeDir')
+		const maristNode = args.get('maristNode')
 		
 
         var paxLocalWorkspace = args.get('paxLocalWorkspace')
@@ -66,6 +67,9 @@ class pax{
 		if (!mvdHomeDir){
             throw new InvalidArgumentException('mvdHomeDir')
         }
+		if (!maristNode){
+			throw new InvalidArgumentException('maristNode')
+		}
 		
 		try {
             // Step 1: make packaging folder
@@ -92,9 +96,8 @@ tar xpoUf ../../zlux.tar
 ../../tag-files.sh . 
 cd zlux-server-framework 
 rm -rf node_modules 
-NODE_VERSION=v12.18.4
-export NODE_HOME=/ZOWE/node/node-${NODE_VERSION}-os390-s390x
-_TAG_REDIR_ERR=txt _TAG_REDIR_IN=txt _TAG_REDIR_OUT=txt __UNTAGGED_READ_MODE=V6 PATH=${NODE_HOME}/bin:$PATH npm install 
+export NODE_HOME=${maristNode}
+_TAG_REDIR_ERR=txt _TAG_REDIR_IN=txt _TAG_REDIR_OUT=txt __UNTAGGED_READ_MODE=V6 PATH=${maristNode}/bin:$PATH npm install 
 cd .. 
 iconv -f iso8859-1 -t 1047 zlux-app-server/defaults/serverConfig/server.json > zlux-app-server/defaults/serverConfig/server.json.1047 
 mv zlux-app-server/defaults/serverConfig/server.json.1047 zlux-app-server/defaults/serverConfig/server.json 
