@@ -11,7 +11,6 @@ runs:
   steps:
     - name: 'checkout'
       run: |
-        cd ..
         mkdir zlux && cd zlux
         git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-app-server.git -b $DEFAULT_PLUGIN_BRANCH
@@ -27,7 +26,7 @@ runs:
         majorVersion=$(echo $version | cut -d. -f1)
         minorVersion=$(echo $version | cut -d. -f2)
         microVersion=$(echo $version | cut -d. -f3)
-        cd ../zlux/zlux-build
+        cd zlux/zlux-build
         sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \
                  -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \
                  -e "s/REVISION=4/REVISION=${microVersion}/" \
@@ -54,21 +53,26 @@ runs:
 
     - name: 'build'
       run: |
-        cd ../zlux/zlux-build
+        cd zlux/zlux-build
         bash -c set -o pipefail && ant testing 2>&1 | grep -vE "^\s+\[exec\]\s+0\% compiling"
       shell: bash 
 
     - name: 'test'
       run: |
-        ls
-        pwd
-        cd ..
-        ls
-        pwd
-        cd dist
-        packages=\$(find ./zlux-app-manager -name package.json | { grep -v node_modules || true; })
-        for package in \$packages
-        do
-            sh -c "cd `dirname \$package` && npm run test --if-present"
-        done
+        echo "fix later"
       shell: bash 
+      
+    - name: 'remove source'
+      run: |
+        cd zlux/zlux-build 
+        ant -Dcapstone=../../dist removeSource
+      shell: bash 
+      
+    - name: 'package'
+      run: |
+        chmod +x dist/zlux-build/*.sh
+        cd dist
+        tar cf ../zlux.tar -H ustar *
+        cd ..
+        git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
+      shell: bash
