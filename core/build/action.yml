@@ -77,6 +77,6 @@ runs:
         tar cf ../zlux.tar -H ustar *
         cd ..
         git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
-        pws
+        pwd
         ls
       shell: bash
