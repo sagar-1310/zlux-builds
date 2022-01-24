@@ -77,4 +77,6 @@ runs:
         git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
         export MVD_HOME_DIR=$(pwd) 
         echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
+        pwd
+        ls
       shell: bash
