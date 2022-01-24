@@ -118,8 +118,7 @@ class pax{
             console.log(`[Step 1]: make folder created `)
 
             // Step 2: sand tar files over
-			var cmd2 = `put ${mvdHomeDir}/zlux.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux.tar
-put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
+			var cmd2 = `put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
 			utils.sftp(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd2)
             console.log(`[Step 2]: sftp put zlux.tar and tag-files.sh completed`)
 
