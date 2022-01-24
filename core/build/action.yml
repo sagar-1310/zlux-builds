@@ -12,8 +12,6 @@ runs:
     - name: 'checkout'
       run: |
         mkdir zlux && cd zlux
-        export MVD_HOME_DIR=$(pwd) 
-        echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
         git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-app-server.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
@@ -77,6 +75,6 @@ runs:
         tar cf ../zlux.tar -H ustar *
         cd ..
         git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
-        pwd
-        ls
+        export MVD_HOME_DIR=$(pwd) 
+        echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
       shell: bash

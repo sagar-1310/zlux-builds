@@ -82,7 +82,7 @@ class pax{
 			var cmd2 = `put ${mvdHomeDir}/zlux.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux.tar
 put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
 			utils.sftp(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd2)
-            console.log(`[Step 2]: sftp put plugin.tar and zlux-build.tar completed`)
+            console.log(`[Step 2]: sftp put zlux.tar and tag-files.sh completed`)
 
 			// step 3: package
             var cmd3 = `cd ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}
