@@ -11,9 +11,9 @@ runs:
   steps:
     - name: 'checkout'
       run: |
+        mkdir zlux && cd zlux
         export MVD_HOME_DIR=$(pwd) 
         echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
-        mkdir zlux && cd zlux
         git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-app-server.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
