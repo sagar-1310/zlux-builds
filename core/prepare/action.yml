@@ -32,6 +32,15 @@ runs:
     - name: 'determine current branch or PR'
       run: |
         if [ -z ${{ inputs.DEFAULT_BRANCH }} ]
+        then
+          echo "yes"
+        fi
+        if [ -n ${{ inputs.DEFAULT_BRANCH }} ]
+        then
+          echo "no"
+        fi
+        
+        if [ -z ${{ inputs.DEFAULT_BRANCH }} ]
         then 
           echo CURRENT_BRANCH=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
         elif [ -z ${{ github.event.pull_request.number }} ]
