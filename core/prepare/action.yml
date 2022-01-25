@@ -10,6 +10,9 @@ inputs:
   github-email:
     description: 'github email'
     required: false
+  default-base:
+    description: 'base branch to build from'
+    required: false
 
 runs:
   using: "composite"
