@@ -1,14 +1,34 @@
 name: "Build and Test core"
 description: "This action helps build and test zlux-core"
 inputs:
-  build-zss:
-    description: 'Does plugins contains zss code'
+  zlux-app-manager:
+    description: 'zlux-app-manager PR number'
     required: false
-
+  zlux-app-server:
+    description: 'zlux-app-server PR number'
+    required: false
+  zlux-build:
+    description: 'zlux-build PR number'
+    required: false
+  zlux-platform:
+    description: 'zlux-platform PR number'
+    required: false
+  zlux-server-framework:
+    description: 'zlux-server-framework PR number'
+    required: false
+  zlux-shared:
+    description: 'zlux-shared PR number'
+    required: false
+    
+    
 
 runs:
   using: "composite"
   steps:
+    - name: 'test'
+      run: |
+        echo $GITHUB_EVENT_PATH
+      shell: bash
     - name: 'checkout'
       run: |
         mkdir zlux && cd zlux
