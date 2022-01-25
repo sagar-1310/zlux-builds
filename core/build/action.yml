@@ -29,6 +29,7 @@ runs:
       run: |
         echo "Pull request's base branch is: ${BASE_BRANCH}"
         echo "${{ github.event.push.ref }}"
+        echo "${{ github.event.pull_request.base.ref }}"
         echo "${{ github.event.pull_request.number }}"
       shell: bash
     - name: 'checkout'
