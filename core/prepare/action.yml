@@ -31,7 +31,10 @@ runs:
     
     - name: 'determine current branch or PR'
       run: |
-        if [ -z ${{ github.event.pull_request.number }} ]
+        if [ -z ${{ inputs.DEFAULT_BRANCH }} ]
+        then 
+          echo CURRENT_BRANCH=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
+        elif [ -z ${{ github.event.pull_request.number }} ]
         then
           echo CURRENT_BRANCH=${GITHUB_REF#refs/heads/} >> $GITHUB_ENV
         else
@@ -39,11 +42,6 @@ runs:
           echo CURRENT_PR=PR-${{ github.event.pull_request.number }} >> $GITHUB_ENV
         fi
         echo REPOSITORY_NAME=$GITHUB_REPOSITORY | sed 's/zowe\///' >> $GITHUB_ENV
-        echo ${{ inputs.DEFAULT_BRANCH }}
-        if [ -z ${{ inputs.DEFAULT_BRANCH }} ]
-        then
-          echo "yes"
-         fi
       shell: bash
     
     - name: 'setup apt-get'
