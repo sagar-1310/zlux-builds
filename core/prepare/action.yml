@@ -36,6 +36,11 @@ runs:
           echo CURRENT_PR=PR-${{ github.event.pull_request.number }} >> $GITHUB_ENV
         fi
         echo REPOSITORY_NAME=$GITHUB_REPOSITORY | sed 's/zowe\///' >> $GITHUB_ENV
+        echo ${{ inputs.DEFAULT_BRANCH }}
+        if [ -z ${{ inputs.DEFAULT_BRANCH }} ]
+        then
+          echo "yes"
+         fi
       shell: bash
     
     - name: 'setup apt-get'
@@ -60,7 +65,6 @@ runs:
           echo GITHUB_PASSWORD=${{ inputs.github-password }} >> $GITHUB_ENV
         fi
         echo GITHUB_REPOSITORY=${{ github.repository }} >> $GITHUB_ENV
-        
       shell: bash
     
     - name: 'get Zowe version'
