@@ -25,22 +25,15 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: 'test'
-      run: |
-        echo "Pull request's base branch is: ${BASE_BRANCH}"
-        echo "${{ github.event.push.ref }}"
-        echo "${{ github.event.pull_request.base.ref }}"
-        echo "${{ github.event.pull_request.number }}"
-      shell: bash
     - name: 'checkout'
       run: |
         mkdir zlux && cd zlux
-        git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-app-server.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-platform.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-server-framework.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-shared.git -b $DEFAULT_PLUGIN_BRANCH
+        git clone https://github.com/zowe/zlux-app-manager.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-app-server.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-build.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-platform.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-server-framework.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-shared.git -b $CURRENT_BRANCH
       shell: bash    
         
     - name: 'set version'
@@ -63,7 +56,7 @@ runs:
             export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
             echo $commit_hash
             echo $current_timestamp
-            sed -i -e "s|{{build\\.branch}}|${DEFAULT_PLUGIN_BRANCH}|g" \
+            sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
                    -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
                    -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
                    -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
@@ -100,6 +93,4 @@ runs:
         git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
         export MVD_HOME_DIR=$(pwd) 
         echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
-        pwd
-        ls
       shell: bash
