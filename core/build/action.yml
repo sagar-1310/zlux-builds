@@ -1,0 +1,146 @@
+name: "Build and Test core"
+description: "This action helps build and test zlux-core"
+inputs:
+  zlux-app-manager:
+    description: 'zlux-app-manager PR number'
+    required: false
+  zlux-app-server:
+    description: 'zlux-app-server PR number'
+    required: false
+  zlux-build:
+    description: 'zlux-build PR number'
+    required: false
+  zlux-platform:
+    description: 'zlux-platform PR number'
+    required: false
+  zlux-server-framework:
+    description: 'zlux-server-framework PR number'
+    required: false
+  zlux-shared:
+    description: 'zlux-shared PR number'
+    required: false
+    
+    
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'checkout'
+      run: |
+        mkdir zlux && cd zlux
+        git clone https://github.com/zowe/zlux-app-manager.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-app-server.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-build.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-platform.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-server-framework.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-shared.git -b $CURRENT_BRANCH
+        
+        if [ -n ${{ github.event.pull_request.number }} ]
+        then
+          cd $REPOSITORY_NAME
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr
+          git merge pr 
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-app-manager }}" ]
+        then
+          cd zlux-app-manager
+          git fetch origin pull/${{ inputs.zlux-app-manager }}/head:pr
+          git merge pr 
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-app-server }}" ]
+        then
+          cd zlux-app-server
+          git fetch origin pull/${{ inputs.zlux-app-server }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-build }}" ]
+        then
+          cd zlux-build
+          git fetch origin pull/${{ inputs.zlux-build }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-platform }}" ]
+        then
+          cd zlux-platform
+          git fetch origin pull/${{ inputs.zlux-platform }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-server-framework }}" ]
+        then
+          cd zlux-server-framework
+          git fetch origin pull/${{ inputs.zlux-server-framework }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-shared }}" ]
+        then
+          cd zlux-shared
+          git fetch origin pull/${{ inputs.zlux-shared }}/head:pr
+          git merge pr
+          cd ..
+        fi
+      shell: bash    
+        
+    - name: 'set version'
+      run: |
+        version=$(echo $ZOWE_VERSION | grep -o '[^-]*$')
+        majorVersion=$(echo $version | cut -d. -f1)
+        minorVersion=$(echo $version | cut -d. -f2)
+        microVersion=$(echo $version | cut -d. -f3)
+        cd zlux/zlux-build
+        sed -i -e "s/MAJOR_VERSION=0/MAJOR_VERSION=${majorVersion}/" \
+                 -e "s/MINOR_VERSION=8/MINOR_VERSION=${minorVersion}/" \
+                 -e "s/REVISION=4/REVISION=${microVersion}/" \
+                  version.properties
+          echo "Set version to:"
+          cat version.properties
+          cd ../zlux-app-server
+          if [ -e "manifest.yaml" ]; then
+            export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
+            export current_timestamp=$(date +%s%3N)
+            export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
+            echo $commit_hash
+            echo $current_timestamp
+            sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
+                   -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
+                   -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
+                   -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
+                   -e "s|{{build\\.version}}|${ZOWE_VERSION}|g" \
+                   "manifest.yaml"
+            echo "manifest is:"
+            cat manifest.yaml
+          fi
+      shell: bash  
+
+    - name: 'build'
+      run: |
+        cd zlux/zlux-build
+        bash -c set -o pipefail && ant testing 2>&1 | grep -vE "^\s+\[exec\]\s+0\% compiling"
+      shell: bash 
+
+    - name: 'test'
+      run: |
+        echo "fix later"
+      shell: bash 
+      
+    - name: 'remove source'
+      run: |
+        cd zlux/zlux-build 
+        ant -Dcapstone=../../dist removeSource
+      shell: bash 
+      
+    - name: 'package'
+      run: |
+        chmod +x dist/zlux-build/*.sh
+        cd dist
+        tar cf ../zlux.tar -H ustar *
+        cd ..
+        git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
+        export MVD_HOME_DIR=$(pwd) 
+        echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
+      shell: bash
