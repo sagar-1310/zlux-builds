@@ -34,6 +34,57 @@ runs:
         git clone https://github.com/zowe/zlux-platform.git -b $CURRENT_BRANCH
         git clone https://github.com/zowe/zlux-server-framework.git -b $CURRENT_BRANCH
         git clone https://github.com/zowe/zlux-shared.git -b $CURRENT_BRANCH
+        
+        
+        if [ -n ${{ github.event.pull_request.number }} ]
+        then
+          cd $REPOSITORY_NAME
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr
+          git merge pr 
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-app-manager }}" ]
+        then
+          cd zlux-app-manager
+          git fetch origin pull/${{ inputs.zlux-app-manager }}/head:pr
+          git merge pr 
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-app-server }}" ]
+        then
+          cd zlux-app-server
+          git fetch origin pull/${{ inputs.zlux-app-server }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-build }}" ]
+        then
+          cd zlux-build
+          git fetch origin pull/${{ inputs.zlux-build }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-platform }}" ]
+        then
+          cd zlux-platform
+          git fetch origin pull/${{ inputs.zlux-platform }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-server-framework }}" ]
+        then
+          cd zlux-server-framework
+          git fetch origin pull/${{ inputs.zlux-server-framework }}/head:pr
+          git merge pr
+          cd ..
+        fi
+        if [ -n "${{ inputs.zlux-shared }}" ]
+        then
+          cd zlux-shared
+          git fetch origin pull/${{ inputs.zlux-shared }}/head:pr
+          git merge pr
+          cd ..
+        fi
       shell: bash    
         
     - name: 'set version'

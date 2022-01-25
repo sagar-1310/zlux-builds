@@ -35,6 +35,7 @@ runs:
           echo CURRENT_BRANCH=${{ github.event.pull_request.base.ref }} >> $GITHUB_ENV
           echo CURRENT_PR=PR-${{ github.event.pull_request.number }} >> $GITHUB_ENV
         fi
+        echo REPOSITORY_NAME=$GITHUB_REPOSITORY | sed 's/zowe\///' >> $GITHUB_ENV
       shell: bash
     
     - name: 'setup apt-get'
