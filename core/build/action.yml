@@ -27,7 +27,7 @@ runs:
   steps:
     - name: 'test'
       run: |
-        echo $GITHUB_EVENT_PATH
+        echo "Pull request's base branch is: ${BASE_BRANCH}"
       shell: bash
     - name: 'checkout'
       run: |
