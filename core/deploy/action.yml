@@ -6,7 +6,6 @@ runs:
   steps:
     - name: 'deploy'
       run: |
-        
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         mv zlux.pax ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax
         mv zlux.tar ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar
@@ -17,3 +16,4 @@ runs:
           echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${CURRENT_BRANCH}-${CURRENT_PR}/${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax"
           echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${CURRENT_BRANCH}-${CURRENT_PR}/${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar"
         fi
+      shell: bash
