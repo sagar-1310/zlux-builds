@@ -125,7 +125,15 @@ runs:
 
     - name: 'test'
       run: |
-        echo "fix later"
+        if [ -n ${{ github.event.pull_request.number }} &&  "$REPOSITORY_NAME" != "zlux-app-server"]
+        then
+          cd dist
+          packages=\$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
+          for package in \$packages
+          do
+            sh -c "cd `dirname \$package` && npm run test --if-present"
+          done
+        fi
       shell: bash 
       
     - name: 'remove source'
