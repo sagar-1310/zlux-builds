@@ -9,7 +9,13 @@ runs:
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         mv zlux.pax ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax
         mv zlux.tar ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar
-        if [ -n ${{ github.event.pull_request.number }} ]
+        if [ -n "${{ inputs.DEFAULT_BRANCH }}" ]
+        then
+          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_BRANCH}-PR-WORKFLOW/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
+          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_BRANCH}-PR-WORKFLOW/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar
+          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_BRANCH}-PR-WORKFLOW/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax"
+          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_BRANCH}-PR-WORKFLOW/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar"
+        elif [ -n ${{ github.event.pull_request.number }} ]
         then
           jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_PR}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
           jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_PR}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar
