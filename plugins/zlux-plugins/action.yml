@@ -25,8 +25,8 @@ runs:
         git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
         if ${{ inputs.build-zss }}
         then 
-          git clone https://github.com/zowe/zss.git -b ${env.BRANCH_NAME} 
-          git clone https://github.com/zowe/zowe-common-c.git -b ${env.BRANCH_NAME} 
+          git clone https://github.com/zowe/zss.git -b $DEFAULT_PLUGIN_BRANCH 
+          git clone https://github.com/zowe/zowe-common-c.git -b $DEFAULT_PLUGIN_BRANCH
           cd zss 
           git submodule update --init 
           tar cf ../../zss.tar -H ustar * 
