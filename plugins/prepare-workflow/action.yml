@@ -67,7 +67,7 @@ runs:
     
     - name: 'get Zowe version'
       run: |
-        git clone --branch staging https://github.com/zowe/zowe-install-packaging.git
+        git clone --branch v2.x/staging https://github.com/zowe/zowe-install-packaging.git
         ZOWE_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
           | grep version \
           | head -1 \
