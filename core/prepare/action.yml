@@ -34,7 +34,7 @@ runs:
         if [ -n "${{ inputs.DEFAULT_BRANCH }}" ]
         then 
           echo CURRENT_BRANCH=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
-        elif [ -z ${{ github.event.pull_request.number }} ]
+        elif [ -z "${{ github.event.pull_request.number }}" ]
         then
           echo CURRENT_BRANCH=${GITHUB_REF#refs/heads/} >> $GITHUB_ENV
         else
