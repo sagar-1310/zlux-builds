@@ -11,11 +11,11 @@ runs:
         mv zlux.tar ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar
         echo "${{ github.event.pull_request.number }}"
         echo "${CURRENT_BRANCH}"
-        if [ -n ${{ github.event.pull_request.number }} ]
+        if [ -n "${{ github.event.pull_request.number }}" ]
         then
           echo "1"
         fi
-        if [ -z ${{ github.event.pull_request.number }} ]
+        if [ -z "${{ github.event.pull_request.number }}" ]
         then
           echo "2"
         fi
