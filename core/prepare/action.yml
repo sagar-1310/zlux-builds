@@ -41,6 +41,7 @@ runs:
           echo CURRENT_BRANCH=${{ github.event.pull_request.base.ref }} >> $GITHUB_ENV
           echo CURRENT_PR=PR-${{ github.event.pull_request.number }} >> $GITHUB_ENV
         fi
+        echo DEPLOY_BRANCH=$CURRENT_BRANCH | sed -e "s+\/+\-+" >> $GITHUB_ENV
         echo REPOSITORY_NAME=$GITHUB_REPOSITORY | sed 's/zowe\///' >> $GITHUB_ENV
       shell: bash
     
