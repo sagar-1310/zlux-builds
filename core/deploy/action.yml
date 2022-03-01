@@ -9,17 +9,7 @@ runs:
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         mv zlux.pax ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax
         mv zlux.tar ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar
-        echo "${{ github.event.pull_request.number }}"
-        echo "${CURRENT_BRANCH}"
         if [ -n "${{ github.event.pull_request.number }}" ]
-        then
-          echo "1"
-        fi
-        if [ -z "${{ github.event.pull_request.number }}" ]
-        then
-          echo "2"
-        fi
-        if [ -z ${{ github.event.pull_request.number }} ]
         then
           jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_PR}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
           jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_PR}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar
