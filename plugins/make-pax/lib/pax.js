@@ -29,6 +29,7 @@ class pax{
 		const jclBuildNumber = args.get('jclBuildNumber')
 		const paxName = args.get('paxName')
 		const mvdHomeDir = args.get('mvdHomeDir')
+		const buildZSS = args.get('buildZSS')
 		
 
         var paxLocalWorkspace = args.get('paxLocalWorkspace')
@@ -69,6 +70,9 @@ class pax{
 		if (!mvdHomeDir){
             throw new InvalidArgumentException('mvdHomeDir')
         }
+		if (!buildZSS){
+            throw new InvalidArgumentException('buildZSS')
+        }
 		
 		try {
             // Step 1: make packaging folder
@@ -78,6 +82,7 @@ class pax{
             console.log(`[Step 1]: make folder created `)
 
             // Step 2: sand tar files over
+			console.log('${buildZSS}')			
 			var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
 put ${mvdHomeDir}/zlux-build.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux-build.tar
 put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`

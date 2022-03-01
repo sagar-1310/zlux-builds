@@ -33,7 +33,9 @@ runs:
           cd ../zowe-common-c 
           tar cf ../../zowe-common-c.tar -H ustar *
           echo "plugin contains ZSS code"
+          echo BUILD_ZSS=true >> $GITHUB_ENV
         else
+          echo BUILD_ZSS=false >> $GITHUB_ENV
           echo "Plugins doesn't contain zss code"
         fi
       shell: bash
