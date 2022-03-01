@@ -5748,7 +5748,12 @@ class pax{
             console.log(`[Step 1]: make folder created `)
 
             // Step 2: sand tar files over
-			console.log(`${buildZSS}`)			
+			if (buildZSS == 'false'){
+				console.log('false')
+			}
+			if (buildZSS == 'true'){
+				console.log('true')
+			}		
 			var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
 put ${mvdHomeDir}/zlux-build.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux-build.tar
 put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
