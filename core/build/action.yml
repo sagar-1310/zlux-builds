@@ -48,6 +48,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-app-manager }}/head:pr
           git merge pr 
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
         if [ -n "${{ inputs.zlux-app-server }}" ]
         then
@@ -55,6 +56,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-app-server }}/head:pr
           git merge pr
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
         if [ -n "${{ inputs.zlux-build }}" ]
         then
@@ -62,6 +64,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-build }}/head:pr
           git merge pr
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
         if [ -n "${{ inputs.zlux-platform }}" ]
         then
@@ -69,6 +72,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-platform }}/head:pr
           git merge pr
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
         if [ -n "${{ inputs.zlux-server-framework }}" ]
         then
@@ -76,6 +80,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-server-framework }}/head:pr
           git merge pr
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
         if [ -n "${{ inputs.zlux-shared }}" ]
         then
@@ -83,6 +88,7 @@ runs:
           git fetch origin pull/${{ inputs.zlux-shared }}/head:pr
           git merge pr
           cd ..
+          echo CUSTOM_PR=true >> $GITHUB_ENV
         fi
       shell: bash    
         
