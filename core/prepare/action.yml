@@ -34,7 +34,7 @@ runs:
         if [ -n "${{ inputs.DEFAULT_BRANCH }}" ]
         then 
           echo CURRENT_BRANCH=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
-        elif [ -z ${{ github.event.pull_request.number }} ]
+        elif [ -z "${{ github.event.pull_request.number }}" ]
         then
           echo CURRENT_BRANCH=${GITHUB_REF#refs/heads/} >> $GITHUB_ENV
         else
@@ -66,6 +66,7 @@ runs:
           echo GITHUB_PASSWORD=${{ inputs.github-password }} >> $GITHUB_ENV
         fi
         echo GITHUB_REPOSITORY=${{ github.repository }} >> $GITHUB_ENV
+        echo DEPLOY_BRANCH=$CURRENT_BRANCH | sed -e 's+\/+\-+' >> $GITHUB_ENV
       shell: bash
     
     - name: 'get Zowe version'
