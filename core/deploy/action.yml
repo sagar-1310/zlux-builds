@@ -11,10 +11,10 @@ runs:
         mv zlux.tar ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar
         if [ -n "${CUSTOM_PR}" ]
         then
-          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${DEPLOY_BRANCH}-sss-${JFROG_CLI_BUILD_NUMBER}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
-          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${DEPLOY_BRANCH}-sss-${JFROG_CLI_BUILD_NUMBER}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar
-          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${DEPLOY_BRANCH}-sss-${JFROG_CLI_BUILD_NUMBER}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax"
-          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${DEPLOY_BRANCH}-sss-${JFROG_CLI_BUILD_NUMBER}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar"
+          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${JFROG_CLI_BUILD_NUMBER}-${DEPLOY_BRANCH}-${REPOSITORY_NAME}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
+          jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.tar ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${JFROG_CLI_BUILD_NUMBER}-${DEPLOY_BRANCH}-${REPOSITORY_NAME}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar
+          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${JFROG_CLI_BUILD_NUMBER}-${DEPLOY_BRANCH}-${REPOSITORY_NAME}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax"
+          echo "${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-${JFROG_CLI_BUILD_NUMBER}-${DEPLOY_BRANCH}-${REPOSITORY_NAME}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.tar"
         elif [ -n "${{ github.event.pull_request.number }}" ]
         then
           jfrog rt u ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax ${ARTIFACTORY_REPO}/zlux-core/${ZOWE_VERSION}-$REPOSITORY_NAME-${CURRENT_PR}/zlux-core-${ZOWE_VERSION}-${TIMESTAMP}.pax
