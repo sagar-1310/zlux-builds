@@ -110,6 +110,9 @@ cd ..
 if [ -e "manifest.yaml" ]; then
   cp manifest.yaml ../../
 fi
+if [ -d "schemas" ]; then
+  cp -r schemas ../../
+fi
 cd ../../
 pax -o saveext -pp -wf ../zlux.pax *`
             utils.ssh(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd3)
