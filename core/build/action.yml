@@ -54,7 +54,7 @@ runs:
     - name: 'build'
       run: |
         cd zlux/zlux-build
-        bash -c set -o pipefail && ant production 2>&1 | grep -vE \"^\\s+\\[exec\\]\\s+0\\% compiling\"
+        bash -c set -o pipefail && ant production 2>&1 | grep -vE "^\s+\[exec\]\s+0\% compiling"
       shell: bash 
       
     - name: 'package'
