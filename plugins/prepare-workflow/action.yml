@@ -84,8 +84,8 @@ runs:
       
     - name: 'test env'
       run: |
-        echo RELEASE=${{ github.release }} >> $GITHUB_ENV
-        echo "${{ github.release }}"
-        echo ${{ github.release }}
+        echo RELEASE=${{ inputs.release }} >> $GITHUB_ENV
+        echo "${{ inputs.release }}"
+        echo ${{ inputs.release }}
       shell: bash
     
