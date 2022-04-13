@@ -84,8 +84,11 @@ runs:
       
     - name: 'test env'
       run: |
-        echo RELEASE=${{ inputs.release }} >> $GITHUB_ENV
-        echo "${{ inputs.release }}"
-        echo ${{ inputs.release }}
+        if [ "${{ inputs.release }}" = "true" ];
+        then 
+          echo RELEASE=${{ inputs.release }} >> $GITHUB_ENV
+        else
+          echo RELEASE=false >> $GITHUB_ENV
+        fi
       shell: bash
     
