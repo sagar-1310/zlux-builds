@@ -43,7 +43,12 @@ runs:
     
     - name: 'npm ci'
       run: |
-        cd ../zlux/zlux-app-manager/virtual-desktop && npm ci
+        if [ $RELEASE = "true"];
+        then 
+          cd ../zlux/zlux-app-manager/virtual-desktop && npm install
+        else
+          cd ../zlux/zlux-app-manager/virtual-desktop && npm ci
+        fi
       shell: bash
     
     - name: 'build plugin'

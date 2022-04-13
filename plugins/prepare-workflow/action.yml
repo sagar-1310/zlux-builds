@@ -87,6 +87,7 @@ runs:
         if [ "${{ inputs.release }}" = "true" ];
         then 
           echo RELEASE=${{ inputs.release }} >> $GITHUB_ENV
+          echo DEFAULT_PLUGIN_BRANCH=v2.x/rc >> $GITHUB_ENV
         else
           echo RELEASE=false >> $GITHUB_ENV
         fi
