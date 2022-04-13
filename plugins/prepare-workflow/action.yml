@@ -10,8 +10,8 @@ inputs:
   github-email:
     description: 'github email'
     required: false
-  github-branch:
-    description: 'repository branch'
+  release:
+    description: 'is this a release'
     required: false
 
 runs:
@@ -62,7 +62,7 @@ runs:
           echo GITHUB_PASSWORD=${{ inputs.github-password }} >> $GITHUB_ENV
         fi
         echo GITHUB_REPOSITORY=${{ github.repository }} >> $GITHUB_ENV
-        
+        echo inputs.release
       shell: bash
     
     - name: 'get Zowe version'
