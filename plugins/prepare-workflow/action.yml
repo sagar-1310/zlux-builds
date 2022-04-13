@@ -62,7 +62,6 @@ runs:
           echo GITHUB_PASSWORD=${{ inputs.github-password }} >> $GITHUB_ENV
         fi
         echo GITHUB_REPOSITORY=${{ github.repository }} >> $GITHUB_ENV
-        echo "${{ github.release }}"
       shell: bash
     
     - name: 'get Zowe version'
@@ -81,5 +80,12 @@ runs:
       run: |
         echo REPOSITORY_NAME=$GITHUB_REPOSITORY | sed 's/zowe\///' >> $GITHUB_ENV
         echo WORKING_DIR=/home/runner/work/"$REPOSITORY_NAME" >> $GITHUB_ENV
+      shell: bash
+      
+    - name: 'test env'
+      run: |
+        echo RELEASE=${{ github.release }} >> $GITHUB_ENV
+        echo "${{ github.release }}"
+        echo ${{ github.release }}
       shell: bash
     
