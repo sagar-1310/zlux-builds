@@ -62,6 +62,7 @@ runs:
           echo GITHUB_PASSWORD=${{ inputs.github-password }} >> $GITHUB_ENV
         fi
         echo GITHUB_REPOSITORY=${{ github.repository }} >> $GITHUB_ENV
+        echo DEPLOY_BRANCH=$CURRENT_BRANCH | sed -e 's+\/+\-+' >> $GITHUB_ENV
       shell: bash
     
     - name: 'get Zowe version'
