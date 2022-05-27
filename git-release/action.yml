@@ -40,6 +40,11 @@ runs:
     - name: 'Merge to master'
       run: |
         for x in $REPOS; do
-          echo $x
+          curl \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ inputs.github-token }}" \
+            https://api.github.com/repos/zowe/$x/merges \
+            -d '{"base":"v1.x/master","head":"v1.x/rc","commit_message":"Zowe Suite V1.28.0"}'
         done
       shell: bash
