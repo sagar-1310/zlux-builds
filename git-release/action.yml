@@ -96,7 +96,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"base":"${RELEASE_BRANCH}","head":"${{ inputs.zowe-common-c-head }}","commit_message":"Zowe Suite ${release-version}"}' \
+                -d '{"base": "'"$RELEASE_BRANCH"'","head": "'"${{ inputs.zowe-common-c-head }}"'","commit_message":"Zowe Suite '"$release-version"'"}' \
                 -w "%{http_code}"
               else
                 echo $val
