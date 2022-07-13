@@ -94,7 +94,7 @@ runs:
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
-                https://api.github.com/repos/zowe/$val/merges \
+                https://api.github.com/repos/zowe/${val}/merges \
                 -d '{"base":"${RELEASE_BRANCH}","head":"${{ inputs.zowe-common-c-head }}","commit_message":"Zowe Suite ${release-version}"}' \
                 -w "%{http_code}"
               else
@@ -104,7 +104,7 @@ runs:
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
-                https://api.github.com/repos/zowe/$val/merges \
+                https://api.github.com/repos/zowe/${val}/merges \
                 -d '{"base":"${RELEASE_BRANCH}","head":"${STAGING_BRANCH}","commit_message":"Zowe Suite ${release-version}"}' \
                 -w "%{http_code}"
               fi
