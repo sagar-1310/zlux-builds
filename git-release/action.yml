@@ -58,6 +58,7 @@ runs:
           echo RELEASE_BRANCH="v2.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v2.x/master" >> $GITHUB_ENV
         fi
+        echo ${release-version}
       shell: bash
       
     
@@ -71,7 +72,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 https://api.github.com/repos/zowe/$x/merges \
-                -d '{"base":"${MASTER_BRANCH}","head":"${RELEASE_BRANCH}","commit_message":"Zowe Suite ${release-version}"}' \
+                -d '{"base": "'"${MASTER_BRANCH}"'","head": "'"${RELEASE_BRANCH}"'", "commit_message":"Zowe Suite '"${release-version}"'"}' \
                 -w "%{http_code}"
             done
         else
