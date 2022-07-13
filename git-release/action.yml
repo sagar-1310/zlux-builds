@@ -89,7 +89,7 @@ runs:
             for x in $REPOS; do
               if [ $x == "zowe-common-c" ]
               then 
-                echo 'merging {$x} common-c'
+                echo 'merging { $x } common-c'
                 curl \
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
