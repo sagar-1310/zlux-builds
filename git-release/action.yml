@@ -88,7 +88,7 @@ runs:
         then
             for x in $REPOS; do
               if [ $x == "zowe-common-c" ]
-              echo 'merging $x'
+              echo 'merging {$x}'
               then 
                 curl \
                 -X POST \
@@ -98,7 +98,8 @@ runs:
                 -d '{"base":"${RELEASE_BRANCH}","head":"${{ inputs.zowe-common-c-head }}","commit_message":"Zowe Suite ${release-version}"}' \
                 -w "%{http_code}"
               else
-                echo 'merging $x'
+                echo 'merging {$x}'
+                echo 'https://api.github.com/repos/zowe/$x/merges'
                 curl \
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
