@@ -22,7 +22,7 @@ inputs:
   merge-to-master:
     description: 'Merge rc to master'
     required: false
-  merge-to-rc:
+  update-rc:
     description: 'Merge staging to rc'
     required: false  
   zowe-common-c-head:
@@ -82,7 +82,7 @@ runs:
     
     - name: 'merge staging to rc'
       run: |
-        if [ "${{ inputs.merge-to-rc }}" == "true" ];
+        if [ "${{ inputs.update-rc }}" == "true" ];
         then
             for x in $REPOS; do
               if [ $x == "zowe-common-c" ]
