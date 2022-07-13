@@ -83,9 +83,12 @@ runs:
     - name: 'merge staging to rc'
       run: |
         if [ "${{ inputs.update-rc }}" == "true" ];
+        echo ${RELEASE_BRANCH}
+        echo ${STAGING_BRANCH}
         then
             for x in $REPOS; do
               if [ $x == "zowe-common-c" ]
+              echo 'merging $x'
               then 
                 curl \
                 -X POST \
@@ -95,6 +98,7 @@ runs:
                 -d '{"base":"${RELEASE_BRANCH}","head":"${{ inputs.zowe-common-c-head }}","commit_message":"Zowe Suite ${release-version}"}' \
                 -w "%{http_code}"
               else
+                echo 'merging $x'
                 curl \
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
