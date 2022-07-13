@@ -63,7 +63,7 @@ runs:
     
     - name: 'merge rc to master'
       run: |
-        if [ "${{ inputs.merge-to-master }}" = "true" ];
+        if [ "${{ inputs.merge-to-master }}" == "true" ];
         then 
             for x in $REPOS; do
               curl \
@@ -82,7 +82,7 @@ runs:
     
     - name: 'merge staging to rc'
       run: |
-        if [ "${{ inputs.merge-to-rc }}" = "true" ];
+        if [ "${{ inputs.merge-to-rc }}" == "true" ];
         then
             for x in $REPOS; do
               if [ $x == "zowe-common-c" ]
