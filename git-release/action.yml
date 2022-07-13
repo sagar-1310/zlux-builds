@@ -22,7 +22,9 @@ inputs:
   merge-to-master:
     description: 'Merge rc to master'
     required: false
-    
+  merge-to-rc:
+    description: 'Merge staging to rc'
+    required: false  
     
 
 runs:
@@ -45,16 +47,18 @@ runs:
       run: |
         if [ ${release-version: 1:1} == 1 ];
         then
+          echo STAGING_BRANCH="v1.x/staging" >> $GITHUB_ENV
           echo RELEASE_BRANCH="v1.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v1.x/master" >> $GITHUB_ENV
         else
+          echo STAGING_BRANCH="v2.x/staging" >> $GITHUB_ENV
           echo RELEASE_BRANCH="v2.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v2.x/master" >> $GITHUB_ENV
         fi
       shell: bash
       
     
-    - name: 'merge to master'
+    - name: 'merge rc to master'
       run: |
         if [ "${{ inputs.merge-to-master }}" = "true" ];
         then 
@@ -65,6 +69,25 @@ runs:
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 https://api.github.com/repos/zowe/$x/merges \
                 -d '{"base":"${MASTER_BRANCH}","head":"${RELEASE_BRANCH}","commit_message":"Zowe Suite ${release-version}"}' \
+                -w "%{http_code}"
+            done
+        else
+          echo "Nothing to do here"
+        fi
+      shell: bash
+      
+    
+    - name: 'merge staging to rc'
+      run: |
+        if [ "${{ inputs.merge-to-rc }}" = "true" ];
+        then 
+            for x in $REPOS; do
+              curl \
+                -X POST \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Authorization: token ${{ inputs.github-token }}" \
+                https://api.github.com/repos/zowe/$x/merges \
+                -d '{"base":"${RELEASE_BRANCH}","head":"${STAGING_BRANCH}","commit_message":"Zowe Suite ${release-version}"}' \
                 -w "%{http_code}"
             done
         else
