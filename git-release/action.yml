@@ -125,6 +125,7 @@ runs:
               if [ $val == "zowe-common-c" ]
               then
                 base_url="https://api.github.com/repos/zowe/$val/releases"
+                echo $val
                 curl \
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
@@ -134,6 +135,8 @@ runs:
                 -w "%{http_code}"
               else
                 base_url="https://api.github.com/repos/zowe/$val/releases"
+                echo $val
+                echo $CURRENT_VERSION
                 curl \
                 -X POST \
                 -H "Accept: application/vnd.github.v3+json" \
