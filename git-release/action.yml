@@ -133,6 +133,13 @@ runs:
                 $base_url \
                 -d '{"tag_name": "zss-'"$CURRENT_VERSION"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"$CURRENT_VERSION"'", "body": "", "draft": false, "prerelease": false}' \
                 -w "%{http_code}"
+                curl \
+                -X POST \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Authorization: token ${{ inputs.github-token }}" \
+                $base_url \
+                -d '{"tag_name": "configmgr-'"$CURRENT_VERSION"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "CONFIG MANAGER '"$CURRENT_VERSION"'", "body": "", "draft": false, "prerelease": false}' \
+                -w "%{http_code}"
               else
                 base_url="https://api.github.com/repos/zowe/$val/releases"
                 echo $val
