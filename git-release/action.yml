@@ -61,7 +61,7 @@ runs:
           echo RELEASE_BRANCH="v2.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v2.x/master" >> $GITHUB_ENV
         fi
-        echo CURRENT_VERSION=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
+        echo CURRENT_VERSION=${{ inputs.release-version }} >> $GITHUB_ENV
       shell: bash
       
     
