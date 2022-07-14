@@ -130,7 +130,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"tag_name": "zss-'"${CURRENT_VERSION}"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"${CURRENT_VERSION}"'", "body": "", "draft": false, "prerelease": false}' \
+                -d '{"tag_name": "zss-'"$CURRENT_VERSION"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"$CURRENT_VERSION"'", "body": "", "draft": false, "prerelease": false}' \
                 -w "%{http_code}"
               else
                 base_url="https://api.github.com/repos/zowe/$val/releases"
@@ -139,7 +139,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"tag_name": "'"${CURRENT_VERSION}"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "'"${CURRENT_VERSION}"'", "body": "", "draft": false, "prerelease": false}' \
+                -d '{"tag_name": "'"$CURRENT_VERSION"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "'"$CURRENT_VERSION"'", "body": "", "draft": false, "prerelease": false}' \
                 -w "%{http_code}"
             fi
           done
