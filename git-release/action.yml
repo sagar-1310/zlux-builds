@@ -28,6 +28,9 @@ inputs:
   zowe-common-c-head:
     description: 'head of zowe-common-c'
     required: false
+  create-release:
+    description: 'Create github release'
+    required: false
     
 
 runs:
@@ -58,7 +61,7 @@ runs:
           echo RELEASE_BRANCH="v2.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v2.x/master" >> $GITHUB_ENV
         fi
-        echo ${release-version}
+        echo $release-version
       shell: bash
       
     
@@ -115,4 +118,28 @@ runs:
           echo "Nothing to do here"
         fi
       shell: bash
- 
+      
+    - name: 'create release'
+      run: |
+        if [ "${{ inputs.create-release }}" == "true" ]
+        then
+          for val in $REPOS; do
+              if [ $val == "zowe-common-c" ]
+              then
+                base_url="https://api.github.com/repos/zowe/$val/releases"
+                curl \
+                -X POST \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Authorization: token ${{ inputs.github-token }}" \
+                $base_url \
+                -d '{"tag_name": "zss-'"$release-version"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"$release-version"'", "body": "", "draft": false, "prerelease": false}' \
+                -w "%{http_code}"
+              else
+                echo "do nothing"
+            fi
+          done
+        else
+         echo 'nothing to do'
+        fi          
+      
+
