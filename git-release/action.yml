@@ -140,6 +140,7 @@ runs:
           done
         else
          echo 'nothing to do'
-        fi          
+        fi   
+      shell: bash        
       
 
