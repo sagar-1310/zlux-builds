@@ -51,7 +51,7 @@ runs:
     
     - name: 'determine version'
       run: |
-        if [ ${release-version: 1:1} == 1 ];
+        if [ "${{ inputs.release-version }}" == 1 ];
         then
           echo STAGING_BRANCH="v1.x/staging" >> $GITHUB_ENV
           echo RELEASE_BRANCH="v1.x/rc" >> $GITHUB_ENV
@@ -61,7 +61,7 @@ runs:
           echo RELEASE_BRANCH="v2.x/rc" >> $GITHUB_ENV
           echo MASTER_BRANCH="v2.x/master" >> $GITHUB_ENV
         fi
-        echo $release-version
+        echo CURRENT_VERSION=${{ inputs.DEFAULT_BRANCH }} >> $GITHUB_ENV
       shell: bash
       
     
@@ -75,7 +75,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 https://api.github.com/repos/zowe/$x/merges \
-                -d '{"base": "'"${MASTER_BRANCH}"'","head": "'"${RELEASE_BRANCH}"'", "commit_message":"Zowe Suite '"${release-version}"'"}' \
+                -d '{"base": "'"${MASTER_BRANCH}"'","head": "'"${RELEASE_BRANCH}"'", "commit_message":"Zowe Suite '"${CURRENT_VERSION}"'"}' \
                 -w "%{http_code}"
             done
         else
@@ -87,8 +87,6 @@ runs:
     - name: 'merge staging to rc'
       run: |
         if [ "${{ inputs.update-rc }}" == "true" ];
-        echo ${RELEASE_BRANCH}
-        echo ${STAGING_BRANCH}
         then
             for val in $REPOS; do
               if [ $val == "zowe-common-c" ]
@@ -100,7 +98,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"base": "'"$RELEASE_BRANCH"'","head": "'"${{ inputs.zowe-common-c-head }}"'","commit_message":"Zowe Suite '"$release-version"'"}' \
+                -d '{"base": "'"$RELEASE_BRANCH"'","head": "'"${{ inputs.zowe-common-c-head }}"'","commit_message":"Zowe Suite '"${CURRENT_VERSION}"'"}' \
                 -w "%{http_code}"
               else
                 echo $val
@@ -110,7 +108,7 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"base": "'"$RELEASE_BRANCH"'","head": "'"$STAGING_BRANCH"'","commit_message": "Zowe Suite '"$release-version"'"}' \
+                -d '{"base": "'"$RELEASE_BRANCH"'","head": "'"$STAGING_BRANCH"'","commit_message": "Zowe Suite '"${CURRENT_VERSION}"'"}' \
                 -w "%{http_code}"
               fi
             done
@@ -132,10 +130,17 @@ runs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Authorization: token ${{ inputs.github-token }}" \
                 $base_url \
-                -d '{"tag_name": "zss-'"$release-version"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"$release-version"'", "body": "", "draft": false, "prerelease": false}' \
+                -d '{"tag_name": "zss-'"${CURRENT_VERSION}"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "ZSS '"${CURRENT_VERSION}"'", "body": "", "draft": false, "prerelease": false}' \
                 -w "%{http_code}"
               else
-                echo "do nothing"
+                base_url="https://api.github.com/repos/zowe/$val/releases"
+                curl \
+                -X POST \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Authorization: token ${{ inputs.github-token }}" \
+                $base_url \
+                -d '{"tag_name": "'"${CURRENT_VERSION}"'","target_commitish": "'"$RELEASE_BRANCH"'","name": "'"${CURRENT_VERSION}"'", "body": "", "draft": false, "prerelease": false}' \
+                -w "%{http_code}"
             fi
           done
         else
