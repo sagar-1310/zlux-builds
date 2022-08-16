@@ -35,11 +35,6 @@ runs:
         sudo apt-get install -y ant-contrib tart
       shell: bash
     
-    - name: 'install mocha'
-      run: |
-        npm install mocha
-      shell: bash
-    
     - name: 'determine current branch or PR'
       run: |
         if [ -z ${{ github.event.pull_request.number }} ]
