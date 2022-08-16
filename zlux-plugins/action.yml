@@ -43,11 +43,15 @@ runs:
     
     - name: 'npm ci'
       run: |
+        git config --global url."https://github.com/".insteadOf "git@github.com:"
+        git config --global url."https://".insteadOf "git://"
         cd ../zlux/zlux-app-manager/virtual-desktop && npm ci
       shell: bash
     
     - name: 'build plugin'
       run: |
+        git config --global url."https://github.com/".insteadOf "git@github.com:"
+        git config --global url."https://".insteadOf "git://"
         cd ../zlux
         export MVD_DESKTOP_DIR=$(pwd)/zlux-app-manager/virtual-desktop
         echo $MVD_DESKTOP_DIR
