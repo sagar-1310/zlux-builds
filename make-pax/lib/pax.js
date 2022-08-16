@@ -80,10 +80,19 @@ class pax{
             utils.ssh(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd)
             console.log(`[Step 1]: make folder created `)
 
-            // Step 2: sand tar files over
-			var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
+// Step 2: sand tar files over
+			if (buildZSS == 'false'){
+				var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
 put ${mvdHomeDir}/zlux-build.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux-build.tar
 put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
+			}
+			if (buildZSS == 'true'){
+				var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
+put ${mvdHomeDir}/zlux-build.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux-build.tar
+put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh
+put ${mvdHomeDir}/zss.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zss.tar 
+put ${mvdHomeDir}/zowe-common-c.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zowe-common-c.tar`
+			}
 			utils.sftp(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd2)
             console.log(`[Step 2]: sftp put plugin.tar and zlux-build.tar completed`)
 
