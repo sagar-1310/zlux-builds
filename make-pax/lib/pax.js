@@ -12,7 +12,6 @@ class pax{
 
     static pack(args) {
         const func = 'pack:'
-        
         const job = args.get('job')
         const paxSSHHost = args.get('paxSSHHost')
         const paxSSHPort = args.get('paxSSHPort')
@@ -29,6 +28,7 @@ class pax{
 		const jclBuildNumber = args.get('jclBuildNumber')
 		const paxName = args.get('paxName')
 		const mvdHomeDir = args.get('mvdHomeDir')
+		const buildZSS = args.get('buildZSS')
 		
 
         var paxLocalWorkspace = args.get('paxLocalWorkspace')
@@ -69,6 +69,9 @@ class pax{
 		if (!mvdHomeDir){
             throw new InvalidArgumentException('mvdHomeDir')
         }
+		if (!buildZSS){
+            throw new InvalidArgumentException('buildZSS')
+        }
 		
 		try {
             // Step 1: make packaging folder
@@ -85,6 +88,7 @@ put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspa
             console.log(`[Step 2]: sftp put plugin.tar and zlux-build.tar completed`)
 
 			// step 3: package
+			if (buildZSS == 'false'){
             var cmd3 = `cd ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}
 chtag -tc iso8859-1 tag-files.sh
 chmod +x tag-files.sh
@@ -97,6 +101,31 @@ mkdir ../zlux-build
 tar xpoUf ../zlux-build.tar
 rm ../zlux-build.tar
 _BPXK_AUTOCVT=ON ../tag-files.sh .`
+			}
+			if (buildZSS == 'true'){
+            var cmd3 = `cd ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}
+chtag -tc iso8859-1 tag-files.sh
+chmod +x tag-files.sh
+mkdir zss zowe-common-c 
+cd zss && tar xpoUf ../zss.tar
+chtag -R -tc ISO8859-1 * 
+cd ../zowe-common-c
+chtag -R -tc ISO8859-1
+cd ../
+rm -rf zss.tar zowe-common-c.tar
+mkdir plugin && cd plugin
+tar xpoUf ../plugin.tar
+rm ../plugin.tar
+cd zssServer/src/ && chtag -tc ISO8859-1 *
+cd ../build && chtag -R -tc ISO8859-1 *
+_BPXK_AUTOCVT=ON ZSS=../../../../zss ./build.sh && cd ../..
+_BPXK_AUTOCVT=ON ../tag-files.sh .
+pax -o saveext -pp -wf ../plugin.pax *
+mkdir ../zlux-build
+tar xpoUf ../zlux-build.tar
+rm ../zlux-build.tar
+_BPXK_AUTOCVT=ON ../tag-files.sh .`
+			}
             utils.ssh(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd3)
             console.log('[Step 3]: packaging completed')
 			
