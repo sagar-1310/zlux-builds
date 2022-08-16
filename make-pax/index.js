@@ -19,6 +19,7 @@ const projectRootPath = process.env.GITHUB_WORKSPACE
 const jclBuildNumber = process.env.JFROG_CLI_BUILD_NUMBER
 const currentBranch = process.env.CURRENT_BRANCH
 const mvdHomeDir = process.env.MVD_HOME_DIR
+const buildZSS = process.env.BUILD_ZSS
 
 // Gets inputs
 const paxSSHHost = core.getInput('pax-ssh-host')
@@ -59,6 +60,7 @@ args.set('paxName',paxName)
 args.set('jclBuildNumber',jclBuildNumber)
 args.set('currentBranch',currentBranch)
 args.set('mvdHomeDir',mvdHomeDir)
+args.set('buildZSS',buildZSS)
 
 pax.pack(args)
 
