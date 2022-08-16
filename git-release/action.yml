@@ -51,7 +51,7 @@ runs:
     
     - name: 'determine version'
       run: |
-        if [ ${CURRENT_VERSION:1:1} == 1 ];;
+        if [ ${CURRENT_VERSION:1:1} == 1 ];
         then
           echo STAGING_BRANCH="v1.x/staging" >> $GITHUB_ENV
           echo RELEASE_BRANCH="v1.x/rc" >> $GITHUB_ENV
