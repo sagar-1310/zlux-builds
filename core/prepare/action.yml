@@ -80,3 +80,9 @@ runs:
         echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
         rm -rf zowe-install-packaging
       shell: bash
+
+    - name: 'get umask'
+      run: |
+        
+        echo umask
+      shell: bash
