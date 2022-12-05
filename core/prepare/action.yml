@@ -84,5 +84,5 @@ runs:
     - name: 'get umask'
       run: |
         
-        echo umask
+        umask
       shell: bash
