@@ -149,6 +149,9 @@ cd ..
 if [ -e "manifest.yaml" ]; then
   cp manifest.yaml ../../
 fi
+if [ -d "schemas" ]; then
+  cp -r schemas ../../
+fi
 cd ../../
 chmod -R 755 *
 pax -o saveext -pp -wf ../zlux.pax *`
