@@ -153,6 +153,7 @@ if [ -d "schemas" ]; then
   cp -r schemas ../../
 fi
 cd ../../
+chmod -R 755 *
 pax -o saveext -pp -wf ../zlux.pax *`
             utils.ssh(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd3)
             console.log('[Step 3]: packaging completed')
