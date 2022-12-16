@@ -6,9 +6,11 @@ runs:
   steps:
     - name: 'deploy'
       run: |
+        mkdir ../npm-test
+        cp package.json ../npm-test
+        cd ../npm-test
+        cp ../${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax .
+        mv ${REPOSITORY_NAME}-${ZOWE_VERSION}-${TIMESTAMP}.pax angular-sample.pax
         ls
-        pwd
-        cd ..
-        pwd
-        ls
+        cat package.json
       shell: bash
