@@ -1,0 +1,14 @@
+name: "npm-publish"
+description: "This action publishes npm packages to zowe jrfog"
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'deploy'
+      run: |
+        ls
+        pwd
+        cd ..
+        pwd
+        ls
+      shell: bash
