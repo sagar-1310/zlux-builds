@@ -9778,6 +9778,7 @@ var projectRootPath = process.env.GITHUB_WORKSPACE
 var workingDirectory = core.getInput('working-directory')
 if (workingDirectory != '') {
     projectRootPath += '/'+ workingDirectory 
+	console.log(`james here is working dir here`)
 }
 
 // Get packageName
