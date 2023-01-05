@@ -6,6 +6,7 @@ runs:
   steps:
     - name: 'get package name'
       run: |
+        cd build/component
         pwd
         ls
         NPM_PACKAGE_NAME=$(cat package.json | jq -r '.name')
