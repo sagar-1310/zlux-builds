@@ -8701,6 +8701,7 @@ class Registry {
         
         var info = new Map()
         var packageJsonFileFullPath
+		console.log(`111111111111   ${workingDirectory}`)
         if (this.workingDirectory) {
             packageJsonFileFullPath = `${process.env.GITHUB_WORKSPACE}/${this.workingDirectory}/${this.packageJsonFile}`
         }
@@ -8747,7 +8748,7 @@ class Registry {
                 }
             }
         } else {
-            console.err(`packageJsonFile is not defined or file ${this.packageJsonFile} doesn't not exist.`)
+            console.err(`packageJsonFile 111is not defined or file ${this.packageJsonFile} doesn't not exist.`)
         }
         this.packageInfo = info
         debug(info)
