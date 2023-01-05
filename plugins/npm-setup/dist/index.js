@@ -8703,7 +8703,7 @@ class Registry {
         var packageJsonFileFullPath
         if (this.workingDirectory) {
 			console.log('124')
-            packageJsonFileFullPath = `${process.env.GITHUB_WORKSPACE}/${this.workingDirectory}/${this.packageJsonFile}`
+            packageJsonFileFullPath = `${this.workingDirectory}/${this.packageJsonFile}`
         }
         else {
 			console.log('123')
