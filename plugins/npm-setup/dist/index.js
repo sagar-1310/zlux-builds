@@ -9776,7 +9776,7 @@ var installRegistry
 var packageName
 var projectRootPath = process.env.GITHUB_WORKSPACE
 var test_path = process.env.MVD_HOME_DIR
-var workingDirectory = core.getInput('working-directory')
+var workingDirectory = test_path + '/sample-angular-app/build/component'
 if (workingDirectory != '') {
     projectRootPath += '/'+ workingDirectory 
 }
@@ -9804,10 +9804,8 @@ if (core.getInput('publish-registry-email') != '') {
         args.set('username', prUsername)
         args.set('password', prPassword)
         args.set('tokenCredential', prTokenCredential)
-        if (workingDirectory != '') {
-            args.set('workingDirectory', workingDirectory)
-        }
-		console.log(`james here is working dir ${test_path}`)
+        args.set('workingDirectory', workingDirectory)
+		console.log(`james here is working dir ${workingDirectory}`)
         publishRegistry = new Registry(args)
         // try to extract publish registry from package.json
         publishRegistry.initFromPackageJson(args)
