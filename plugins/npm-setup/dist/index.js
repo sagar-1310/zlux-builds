@@ -9786,8 +9786,8 @@ packageName = core.getInput('package-name')
 if (!packageName) 
     throw new InvalidArgumentException('packageName')
 
-if (!workingDirectory) 
-    throw new InvalidArgumentException('workingDirectory')
+if (!test_path) 
+    throw new InvalidArgumentException('test_path')
 
 var packageInfo
 
@@ -9807,7 +9807,7 @@ if (core.getInput('publish-registry-email') != '') {
         if (workingDirectory != '') {
             args.set('workingDirectory', workingDirectory)
         }
-		console.log(`james here is working dir ${workingDirectory}`)
+		console.log(`james here is working dir ${test_path}`)
         publishRegistry = new Registry(args)
         // try to extract publish registry from package.json
         publishRegistry.initFromPackageJson(args)
