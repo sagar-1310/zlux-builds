@@ -239,13 +239,15 @@ class Registry {
         
         var info = new Map()
         var packageJsonFileFullPath
-		console.log(`111111111111   ${workingDirectory}`)
         if (this.workingDirectory) {
+			console.log('124')
             packageJsonFileFullPath = `${process.env.GITHUB_WORKSPACE}/${this.workingDirectory}/${this.packageJsonFile}`
         }
         else {
+			console.log('123')
             packageJsonFileFullPath = `${process.env.GITHUB_WORKSPACE}/${this.packageJsonFile}`
         }
+		console.log(`111111111111   ${packageJsonFileFullPath}`)
         if (this.packageJsonFile && utils.fileExists(packageJsonFileFullPath)) {
             var pkg = JSON.parse(fs.readFileSync(packageJsonFileFullPath));
             
