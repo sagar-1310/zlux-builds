@@ -6,6 +6,8 @@ runs:
   steps:
     - name: 'get package name'
       run: |
+        pwd
+        ls
         NPM_PACKAGE_NAME=$(cat package.json | jq -r '.name')
         echo "NPM_PACKAGE_NAME=$NPM_PACKAGE_NAME" >> $GITHUB_ENV
       shell: bash
