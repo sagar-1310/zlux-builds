@@ -286,7 +286,7 @@ class Registry {
                 }
             }
         } else {
-            console.err(`packageJsonFile is not defined or file ${this.packageJsonFile} doesn't not exist.`)
+            console.err(`packageJsonFile 111is not defined or file ${this.packageJsonFile} doesn't not exist.`)
         }
         this.packageInfo = info
         debug(info)
