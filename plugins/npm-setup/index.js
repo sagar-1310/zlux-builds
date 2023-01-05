@@ -18,16 +18,19 @@ var publishRegistry
 var installRegistry
 var packageName
 var projectRootPath = process.env.GITHUB_WORKSPACE
+var test_path = process.env.MVD_HOME_DIR
 var workingDirectory = core.getInput('working-directory')
 if (workingDirectory != '') {
     projectRootPath += '/'+ workingDirectory 
-	console.log(`james here is working dir here`)
 }
 
 // Get packageName
 packageName = core.getInput('package-name')     
 if (!packageName) 
     throw new InvalidArgumentException('packageName')
+
+if (!workingDirectory) 
+    throw new InvalidArgumentException('workingDirectory')
 
 var packageInfo
 
