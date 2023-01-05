@@ -239,6 +239,7 @@ class Registry {
         
         var info = new Map()
         var packageJsonFileFullPath
+		console.log(`111111111111   ${workingDirectory}`)
         if (this.workingDirectory) {
             packageJsonFileFullPath = `${process.env.GITHUB_WORKSPACE}/${this.workingDirectory}/${this.packageJsonFile}`
         }
