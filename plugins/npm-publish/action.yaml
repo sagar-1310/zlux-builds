@@ -7,8 +7,6 @@ runs:
     - name: 'get package name'
       run: |
         cd build/component
-        pwd
-        ls
         NPM_PACKAGE_NAME=$(cat package.json | jq -r '.name')
         echo "NPM_PACKAGE_NAME=$NPM_PACKAGE_NAME" >> $GITHUB_ENV
       shell: bash
@@ -16,10 +14,10 @@ runs:
     - name: 'repackage'
       run: |
         mkdir ../sample-app
-        cp package.json ../sample-app
+        cp build/component/package.json ../sample-app
         cd ../sample-app
         cp ../${REPOSITORY_NAME}-${ZOWE_VERSION}-*.pax .
-        mv ${REPOSITORY_NAME}-${ZOWE_VERSION}-*.pax angular-sample.pax
+        mv ${REPOSITORY_NAME}-${ZOWE_VERSION}-*.pax ${NPM_PACKAGE_NAME}.pax
         cat package.json
       shell: bash
 
