@@ -19,7 +19,7 @@ var installRegistry
 var packageName
 var projectRootPath = process.env.GITHUB_WORKSPACE
 var test_path = process.env.MVD_HOME_DIR
-var workingDirectory = test_path + '/zlux/sample-angular-app/'
+var workingDirectory = test_path + '/zlux/sample-angular-app/build/component'
 if (workingDirectory != '') {
     projectRootPath += '/'+ workingDirectory 
 }
