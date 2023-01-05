@@ -37,6 +37,14 @@ inputs:
     description: 'publish registry token credential'
     required: false
 
+
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  - name: 'package tar'
+    run: |
+      cd ../zlux/$REPOSITORY_NAME && tar cf ../../plugin.tar -H ustar *
+      cd ../zlux-build && tar cf ../../zlux-build.tar -H ustar *
+    shell: bash
+
+  - name: 
+    using: 'node12'
+    main: 'dist/index.js'
