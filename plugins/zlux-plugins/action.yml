@@ -63,7 +63,10 @@ runs:
         packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
         for package in $packages
         do
-          sh -c "cd `dirname $package` && npm ci && npm run build "
+          if [ $(node -e "const fs = require('fs'); const pac = JSON.parse(fs.readFileSync('${package}')); if (pac.scripts && pac.scripts.build) { console.log('true')};") = "true" ]
+          then
+            sh -c "cd `dirname $package` && npm ci && npm run build "
+          fi
         done
       shell: bash
       
@@ -73,7 +76,10 @@ runs:
         packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
         for package in $packages
         do
-          sh -c "cd `dirname $package` && npm test "
+          if [ $(node -e "const fs = require('fs'); const pac = JSON.parse(fs.readFileSync('${package}')); if (pac.scripts && pac.scripts.build) { console.log('true')};") = "true" ]
+          then
+            sh -c "cd `dirname $package` && npm test "
+          fi
         done
       shell: bash
     
