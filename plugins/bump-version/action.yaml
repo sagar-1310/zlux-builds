@@ -1,0 +1,6 @@
+name: "Bump npm version"
+description: "Bump npm version"
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
