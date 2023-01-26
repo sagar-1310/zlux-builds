@@ -77,3 +77,6 @@ class utils {
     }
 	
 }
+
+
+module.exports = utils;
