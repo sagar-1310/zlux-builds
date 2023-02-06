@@ -35,6 +35,7 @@ var newVersion
 var res
 var workdir = tempFolder;
 var manifest
+var pluginDef
 
 
 // bump package.json 
@@ -46,7 +47,7 @@ for (let i = 0; i < packageDir.length; i++){
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
 }
 
-
+// bump manifest 
 if (utils.fileExists(workdir + '/manifest.yaml')) {
 	manifest = 'manifest.yaml'
 } else if (utils.fileExists(workdir + '/manifest.yml')) {
@@ -58,11 +59,22 @@ if (utils.fileExists(workdir + '/manifest.yaml')) {
 }
 
 
+// bump pluginDefintion.json
+if (utils.fileExists(workdir + '/pluginDefinition.json')) {
+	pluginDef = 'pluginDefinition.json'
+	utils.bumpPackageJson(pluginDef, version)
+} else {
+	throw new Error('No pluginDefintion found.')
+}
+
+
+
 newVersion = utils.bumpManifestVersion(`${workdir}/${manifest}`, version)
 console.log('New version:', newVersion)
 github._cmd(tempFolder, 'status');
 github._cmd(tempFolder, 'diff');
 github.add(workdir, 'manifest.yaml')
+github.add(workdir, 'pluginDefinition.json')
 for (let i = 0; i < packageDir.length; i++){
 	github.add(workdir, ` -f ${packageDir[i]}`)
 }

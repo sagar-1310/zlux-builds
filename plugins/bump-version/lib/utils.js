@@ -104,6 +104,40 @@ class utils {
 		}
 	}
 	
+	static bumpPackageJson(packageFile, version){
+		if (version == '') {
+            version = 'MINOR';
+        }
+		
+		const oldVersionLine = this.sh(`cat ${packageFile} | grep 'pluginVersion:'`);
+		if (!oldVersionLine) {
+            console.log(`Version is not defined in ${packageFile}`);
+            return;
+        }
+        const oldVersion = oldVersionLine.split(':')[1].trim();
+        let oldVersionParsed = this.parseSemanticVersion(oldVersion);
+
+        switch (version.toUpperCase()) {
+            case 'PATCH':
+                oldVersionParsed['patch'] = parseInt(oldVersionParsed['patch'], 10) + 1;
+                break;
+            case 'MINOR':
+                oldVersionParsed['minor'] = parseInt(oldVersionParsed['minor'], 10) + 1;
+                break;
+            case 'MAJOR':
+                oldVersionParsed['major'] = parseInt(oldVersionParsed['major'], 10) + 1;
+                break;
+            default:
+                oldVersionParsed = this.parseSemanticVersion(version);
+                break;
+        }
+        const newVersion = this.combineSemanticVersion(oldVersionParsed);
+		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
+		const newData = data.replaceAll('"pluginVersion": "{oldVersionParsed}"', '"pluginVersion": "${newVersion}"')
+		fs.writeFileSync(`${packageFile}`, newData);
+		
+	}
+	
 }
 
 
