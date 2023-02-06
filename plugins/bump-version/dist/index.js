@@ -14111,7 +14111,7 @@ class utils {
         }
         const newVersion = this.combineSemanticVersion(oldVersionParsed);
 		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
-		const newData = data.toString().replace('"pluginVersion": "{oldVersionParsed}"', '"pluginVersion": "${newVersion}"')
+		const newData = data.toString().replaceAll('"pluginVersion": "{oldVersionParsed}"', '"pluginVersion": "${newVersion}"')
 		fs.writeFileSync(`${packageFile}`, newData);
 		
 	}
