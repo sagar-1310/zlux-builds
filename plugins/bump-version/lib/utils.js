@@ -109,7 +109,7 @@ class utils {
             version = 'MINOR';
         }
 		
-		const oldVersionLine = this.sh(`cat ${packageFile} | grep 'pluginVersion:'`);
+		const oldVersionLine = this.sh(`grep '"pluginVersion"' ${packageFile} | cut -d '"' -f 4 | head -n 1`);
 		if (!oldVersionLine) {
             console.log(`Version is not defined in ${packageFile}`);
             return;
