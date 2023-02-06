@@ -109,12 +109,11 @@ class utils {
             version = 'MINOR';
         }
 		
-		const oldVersionLine = this.sh(`grep '"pluginVersion"' ${packageFile} | cut -d '"' -f 4 | head -n 1`);
-		if (!oldVersionLine) {
+		const oldVersion = this.sh(`grep '"pluginVersion"' ${packageFile} | cut -d '"' -f 4 | head -n 1`);
+		if (!oldVersion) {
             console.log(`Version is not defined in ${packageFile}`);
             return;
         }
-        const oldVersion = oldVersionLine.split(':')[1].trim();
         let oldVersionParsed = this.parseSemanticVersion(oldVersion);
 
         switch (version.toUpperCase()) {
