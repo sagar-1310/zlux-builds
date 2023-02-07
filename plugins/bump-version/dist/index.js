@@ -14062,10 +14062,12 @@ class utils {
         return `v${newVersion}`;
     }
 	
-	static findAllPackages(directory){
-		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name package.json | { grep -v node_modules || true; })`);
+	static findAllPackages(directory, pname){
+		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name ${pname} | { grep -v node_modules || true; })`);
 		return packageNames
 	}
+	
+	static find
 	
 	static bumpPackageVersion(packageFile, version){
 		if (version == '') {
@@ -14366,9 +14368,8 @@ var pluginDef
 
 
 // bump package.json 
-packageNames = utils.findAllPackages(`${workdir}`)
+packageNames = utils.findAllPackages(`${workdir}`, 'package.json')
 packageDir = packageNames.split(' ')
-
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpPackageVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
@@ -14387,13 +14388,11 @@ if (utils.fileExists(workdir + '/manifest.yaml')) {
 
 
 // bump pluginDefintion.json
-if (utils.fileExists(workdir + '/pluginDefinition.json')) {
-	pluginDef = 'pluginDefinition.json'
-	utils.bumpPackageJson(pluginDef, version)
-} else {
-	throw new Error('No pluginDefintion found.')
+pluginDef = utils.findAllPackages(`${workdir}`, 'pluginDefinition.json')
+pluginDefDir = pluginDef.split(' ')
+for (let i = 0; i < pluginDefDir.length; i++){
+	utils.bumpPackageJson(`${workdir}/${pluginDefDir[i]}`, version)
 }
-
 
 
 newVersion = utils.bumpManifestVersion(`${workdir}/${manifest}`, version)
@@ -14404,6 +14403,9 @@ github.add(workdir, 'manifest.yaml')
 github.add(workdir, 'pluginDefinition.json')
 for (let i = 0; i < packageDir.length; i++){
 	github.add(workdir, ` -f ${packageDir[i]}`)
+}
+for (let i = 0; i < pluginDefDir.length; i++){
+	github.add(workdir, ` -f ${pluginDefDir[i]}`)
 }
 res = github.commit(tempFolder, newVersion)
 

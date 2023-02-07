@@ -83,10 +83,12 @@ class utils {
         return `v${newVersion}`;
     }
 	
-	static findAllPackages(directory){
-		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name package.json | { grep -v node_modules || true; })`);
+	static findAllPackages(directory, pname){
+		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name ${pname} | { grep -v node_modules || true; })`);
 		return packageNames
 	}
+	
+	static find
 	
 	static bumpPackageVersion(packageFile, version){
 		if (version == '') {
