@@ -83,7 +83,7 @@ class utils {
         return `v${newVersion}`;
     }
 	
-	static findAllPackages(directory, pname){
+	static findAllFiles(directory, pname){
 		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name ${pname} | { grep -v node_modules || true; })`);
 		return packageNames
 	}
