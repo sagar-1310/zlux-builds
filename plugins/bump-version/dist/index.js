@@ -14067,8 +14067,6 @@ class utils {
 		return packageNames
 	}
 	
-	static find
-	
 	static bumpPackageVersion(packageFile, version){
 		if (version == '') {
             version = 'MINOR';
