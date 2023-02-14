@@ -70,9 +70,9 @@ runs:
     
     - name: 'set plugin version'
       run: |
-        if [ -z ${{ inputs.release }} ]
+        if [ -z ${{ inputs.plugin-version }} ]
         then
-          ZOWE_VERSION=${{ inputs.release }}
+          ZOWE_VERSION=${{ inputs.plugin-version }}
           echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
         elif [ -f "manifest.yaml" ]
         then 
