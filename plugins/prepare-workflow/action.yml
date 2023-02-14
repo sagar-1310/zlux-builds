@@ -70,15 +70,19 @@ runs:
     
     - name: 'set plugin version'
       run: |
+        echo "this is the input ${{ inputs.plugin-version }} "
         if [ -z ${{ inputs.plugin-version }} ]
         then
           ZOWE_VERSION=${{ inputs.plugin-version }}
           echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+          echo '1'
         elif [ -f "manifest.yaml" ]
         then 
           ZOWE_VERSION=$(cat manifest.yaml | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' )
           echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+          echo '2'
         else
+          echo '3'
           git clone --branch v2.x/staging https://github.com/zowe/zowe-install-packaging.git
           ZOWE_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
             | grep version \
