@@ -71,7 +71,7 @@ runs:
     - name: 'set plugin version'
       run: |
         echo "this is the input ${{ inputs.plugin-version }} "
-        if [ -z ${{ inputs.plugin-version }} ]
+        if [ ! -n ${{ inputs.plugin-version }} ]
         then
           ZOWE_VERSION=${{ inputs.plugin-version }}
           echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
