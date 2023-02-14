@@ -13,6 +13,9 @@ inputs:
   release:
     description: 'is this a release'
     required: false
+  plugin-version:
+    description: 'specified version'
+    required: false    
 
 runs:
   using: "composite"
@@ -65,16 +68,26 @@ runs:
         echo DEPLOY_BRANCH=$CURRENT_BRANCH | sed -e 's+\/+\-+' >> $GITHUB_ENV
       shell: bash
     
-    - name: 'get Zowe version'
+    - name: 'set plugin version'
       run: |
-        git clone --branch v2.x/staging https://github.com/zowe/zowe-install-packaging.git
-        ZOWE_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
-          | grep version \
-          | head -1 \
-          | awk -F: '{ print $2 }' \
-          | sed 's/[",]//g')
-        echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
-        rm -rf zowe-install-packaging
+        if [ -n ${{ inputs.release }} ]
+        then
+          ZOWE_VERSION=${{ inputs.release }}
+          echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+        elif [ -f "manifest.yaml" ]
+        then 
+          ZOWE_VERSION=$(cat manifest.yaml | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' )
+          echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+        else
+          git clone --branch v2.x/staging https://github.com/zowe/zowe-install-packaging.git
+          ZOWE_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
+            | grep version \
+            | head -1 \
+            | awk -F: '{ print $2 }' \
+            | sed 's/[",]//g')
+          echo "ZOWE_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+          rm -rf zowe-install-packaging
+        fi
       shell: bash
 
     - name: 'set plugins path'
@@ -83,7 +96,7 @@ runs:
         echo WORKING_DIR=/home/runner/work/"$REPOSITORY_NAME" >> $GITHUB_ENV
       shell: bash
       
-    - name: 'test env'
+    - name: set release'
       run: |
         if [ "${{ inputs.release }}" = "true" ];
         then 
