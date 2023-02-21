@@ -14062,7 +14062,7 @@ class utils {
         return `v${newVersion}`;
     }
 	
-	static findAllPackages(directory, pname){
+	static findAllFiles(directory, pname){
 		const packageNames = utils.sh(`cd ${directory} && echo $(find . -name ${pname} | { grep -v node_modules || true; })`);
 		return packageNames
 	}
@@ -14366,7 +14366,7 @@ var pluginDef
 
 
 // bump package.json 
-packageNames = utils.findAllPackages(`${workdir}`, 'package.json')
+packageNames = utils.findAllFiles(`${workdir}`, 'package.json')
 packageDir = packageNames.split(' ')
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpPackageVersion(`${workdir}/${packageDir[i]}`,version)
@@ -14386,7 +14386,7 @@ if (utils.fileExists(workdir + '/manifest.yaml')) {
 
 
 // bump pluginDefintion.json
-pluginDef = utils.findAllPackages(`${workdir}`, 'pluginDefinition.json')
+pluginDef = utils.findAllFiles(`${workdir}`, 'pluginDefinition.json')
 pluginDefDir = pluginDef.split(' ')
 for (let i = 0; i < pluginDefDir.length; i++){
 	utils.bumpPackageJson(`${workdir}/${pluginDefDir[i]}`, version)
