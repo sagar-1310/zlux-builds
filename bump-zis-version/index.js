@@ -40,3 +40,18 @@ for (let i = 0; i < packageDir.length; i++){
 	utils.bumpEnvVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
 }
+
+// bump manifest 
+if (utils.fileExists(workdir + '/manifest.template.yaml')) {
+	manifest = 'manifest.template.yaml'
+} else if (utils.fileExists(workdir + '/manifest.template.yml')) {
+	manifest = 'manifest.template.yml'
+} else if (utils.fileExists(workdir + '/manifest.template.json')) {
+	throw new Error('Bump version on manifest.template.json is not supported yet.')
+} else {
+	throw new Error('No manifest found.')
+}
+
+newVersion = utils.bumpManifestVersion(`${workdir}/${manifest}`, version)
+console.log(utils.sh(`cat ${workdir}/${manifest}`));
+console.log('New version:', newVersion)
