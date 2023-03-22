@@ -363,7 +363,7 @@ class utils {
 	}
 	
 	static bumpEnvVersion(packageFile, version){
-		const oldVersion = this.sh(`grep '"VERSION"' ${packageFile} | cut -d '"' -f 4 | head -n 1`);
+		const oldVersion = this.sh(`sed -n 's/^VERSION=//p' ${packageFile} `);
 		if (!oldVersion) {
             console.log(`Version is not defined in ${packageFile}`);
             return;
