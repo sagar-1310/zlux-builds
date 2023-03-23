@@ -9,8 +9,6 @@ var version = core.getInput('version')
 var branch = core.getInput('branch-name')
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
-console.log(`look at this branch ${branch}`)
-
 if (branch == ''){
 	branch = 'v2.x/staging'
 }
@@ -57,3 +55,25 @@ if (utils.fileExists(workdir + '/manifest.template.yaml')) {
 newVersion = utils.bumpManifestVersion(`${workdir}/${manifest}`, version)
 console.log(utils.sh(`cat ${workdir}/${manifest}`));
 console.log('New version:', newVersion)
+github._cmd(tempFolder, 'status');
+github._cmd(tempFolder, 'diff');
+github.add(workdir, 'manifest.yaml')
+
+for (let i = 0; i < packageDir.length; i++){
+	github.add(workdir, ` -f ${packageDir[i]}`)
+}
+
+res = github.commit(tempFolder, newVersion)
+
+if (res.includes('Git working directory not clean.')) {
+	throw new Error('Working directory is not clean')
+} else if (!newVersion.match(/^v[0-9]+\.[0-9]+\.[0-9]+$/)) {
+	throw new Error(`Bump version failed: ${newVersion}`)
+}
+
+
+console.log(`Pushing ${branch} to remote ...`)
+github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_TOKEN, repo)
+if (!github.isSync(branch, tempFolder)) {
+	throw new Error('Branch is not synced with remote after npm version.')
+}
