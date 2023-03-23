@@ -14363,6 +14363,8 @@ var version = core.getInput('version')
 var branch = core.getInput('branch')
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
+console.log(`look at this branch ${branch}`)
+
 if (branch == ''){
 	branch = 'v2.x/staging'
 }
