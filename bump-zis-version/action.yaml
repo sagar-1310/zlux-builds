@@ -1,7 +1,7 @@
 name: "Bump ZIS version"
 description: "Bump npm version"
 inputs:
-  branch:
+  branch-name:
     description: 'the default branch'
     required: false
   version:

@@ -14360,7 +14360,7 @@ const actionsGithub = __nccwpck_require__(6584)
 
 
 var version = core.getInput('version')
-var branch = core.getInput('branch')
+var branch = core.getInput('branch-name')
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
 console.log(`look at this branch ${branch}`)
