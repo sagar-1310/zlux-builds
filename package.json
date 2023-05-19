@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/zowe-actions/zlux-builds#readme",
   "dependencies": {
-    "@actions/core": "^1.9.1",
+    "@actions/core": "^1.10.0",
     "debug": "^4.3.4",
     "glob": "^7.2.3",
     "js-yaml": "^4.1.0",
