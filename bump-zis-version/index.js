@@ -57,7 +57,7 @@ console.log(utils.sh(`cat ${workdir}/${manifest}`));
 console.log('New version:', newVersion)
 github._cmd(tempFolder, 'status');
 github._cmd(tempFolder, 'diff');
-github.add(workdir, 'manifest.yaml')
+github.add(workdir, `${manifest}`)
 
 for (let i = 0; i < packageDir.length; i++){
 	github.add(workdir, ` -f ${packageDir[i]}`)
