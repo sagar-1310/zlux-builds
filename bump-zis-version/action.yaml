@@ -17,5 +17,5 @@ runs:
         echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
       shell: bash
       
-  using: 'node12'
-  main: 'dist/index.js'
+    - name: 'run nodejs'
+      run: node 'dist/index.js' 
