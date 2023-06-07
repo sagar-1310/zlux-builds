@@ -14359,8 +14359,8 @@ const Debug = __nccwpck_require__(5846)
 const actionsGithub = __nccwpck_require__(6584)
 
 
-var version = core.getInput('version')
-var branch = core.getInput('branch-name')
+var version = core.getInput('VERSION')
+var branch = core.getInput('BRANCH-NAME')
 var repo_name = process.env.REPO_NAME
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 

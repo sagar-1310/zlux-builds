@@ -20,4 +20,7 @@ runs:
     - name: 'run nodejs'
       run: node 'dist/index.js' 
       working-directory: ${{ github.action_path }}
+      env:
+        BRANCH_NAME: ${{ input.branch-name }}
+        VERSION: ${{ input.version }}
       shell: bash
