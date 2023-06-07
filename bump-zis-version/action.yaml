@@ -10,5 +10,12 @@ inputs:
     default: 'minor'
 
 runs:
+  using: "composite"
+  steps:
+    - name: 'process env'
+      run: |
+        echo "REPO_NAME=${{ github.event.repository.name }}" >> $GITHUB_ENV
+      shell: bash
+      
   using: 'node12'
   main: 'dist/index.js'
