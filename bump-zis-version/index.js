@@ -7,7 +7,7 @@ const actionsGithub = require('@actions/github')
 
 var version = core.getInput('version')
 var branch = core.getInput('branch-name')
-var repo_name = core.getInput('repository-name')
+var repo_name = process.env.REPO_NAME
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
 if (branch == ''){
