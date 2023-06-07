@@ -14,6 +14,7 @@ if (branch == ''){
 	branch = 'v2.x/staging'
 }
 if (version == '') {
+	console.log('helppppp')
     version = 'MINOR'
 }
 
