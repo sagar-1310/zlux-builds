@@ -14370,7 +14370,8 @@ if (version == '') {
     version = 'MINOR'
 }
 
-console.log(`${ github.event.repository.name }`)
+console.log(`${version}`)
+console.log(`${REPO_NAME}`)
 
 /*
 // get temp folder for cloning
