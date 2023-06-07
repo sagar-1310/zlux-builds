@@ -14370,6 +14370,9 @@ if (version == '') {
     version = 'MINOR'
 }
 
+console.log(`${( github.event.repository.name )}`)
+
+/*
 // get temp folder for cloning
 var tempFolder = `${process.env.RUNNER_TEMP}/.tmp-npm-registry-${utils.dateTimeNow()}`
 console.log(`${tempFolder}`)
@@ -14431,6 +14434,7 @@ github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_
 if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
+*/
 })();
 
 module.exports = __webpack_exports__;
