@@ -14361,6 +14361,7 @@ const actionsGithub = __nccwpck_require__(6584)
 
 var version = core.getInput('version')
 var branch = core.getInput('branch-name')
+var repo_name = core.getInput('repository-name')
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
 if (branch == ''){
@@ -14371,7 +14372,7 @@ if (version == '') {
 }
 
 console.log(`${version}`)
-console.log(`${REPO_NAME}`)
+console.log(`${repo_name}`)
 
 /*
 // get temp folder for cloning
