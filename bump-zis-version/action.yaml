@@ -19,3 +19,4 @@ runs:
       
     - name: 'run nodejs'
       run: node 'dist/index.js' 
+      shell: bash
