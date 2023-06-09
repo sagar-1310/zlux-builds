@@ -332,8 +332,6 @@ class utils {
 	static bumpDynamicVersion(packageFile){
 		let oldVersion =  Number(this.sh(`sed -n 's/^DYNLINK_PLUGIN_VERSION=//p' ${packageFile} `));
 		const newVersion = oldVersion + 1;
-		console.log(`new version is: ${newVersion}`)
-		console.log(`new oldVersion is: ${oldVersion}`)
 		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
 		const newData = data.replace(`DYNLINK_PLUGIN_VERSION=${oldVersion}`, `DYNLINK_PLUGIN_VERSION=${newVersion}`)
 		fs.writeFileSync(`${packageFile}`, newData);
@@ -14399,12 +14397,6 @@ var manifest
 var pluginDef
 
 
-if (repo_name == 'zss') {
-    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
-	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
-}
-
-/*
 
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
@@ -14413,6 +14405,13 @@ packageDir = envFileNames.split(' ')
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpEnvVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
+}
+
+
+//bump dynamic verion
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
 }
 
 // bump manifest 
@@ -14452,7 +14451,6 @@ if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
 
-*/
 })();
 
 module.exports = __webpack_exports__;

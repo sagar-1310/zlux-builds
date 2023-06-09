@@ -35,12 +35,6 @@ var manifest
 var pluginDef
 
 
-if (repo_name == 'zss') {
-    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
-	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
-}
-
-/*
 
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
@@ -49,6 +43,13 @@ packageDir = envFileNames.split(' ')
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpEnvVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
+}
+
+
+//bump dynamic verion
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
 }
 
 // bump manifest 
@@ -87,5 +88,3 @@ github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_
 if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
-
-*/

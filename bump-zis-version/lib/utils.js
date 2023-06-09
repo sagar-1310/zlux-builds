@@ -107,8 +107,6 @@ class utils {
 	static bumpDynamicVersion(packageFile){
 		let oldVersion =  Number(this.sh(`sed -n 's/^DYNLINK_PLUGIN_VERSION=//p' ${packageFile} `));
 		const newVersion = oldVersion + 1;
-		console.log(`new version is: ${newVersion}`)
-		console.log(`new oldVersion is: ${oldVersion}`)
 		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
 		const newData = data.replace(`DYNLINK_PLUGIN_VERSION=${oldVersion}`, `DYNLINK_PLUGIN_VERSION=${newVersion}`)
 		fs.writeFileSync(`${packageFile}`, newData);
