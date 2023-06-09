@@ -14,14 +14,11 @@ if (branch == ''){
 	branch = 'v2.x/staging'
 }
 if (version == '') {
-	console.log('helppppp')
     version = 'MINOR'
 }
 
-console.log(`${version}`)
-console.log(`${repo_name}`)
 
-/*
+
 // get temp folder for cloning
 var tempFolder = `${process.env.RUNNER_TEMP}/.tmp-npm-registry-${utils.dateTimeNow()}`
 console.log(`${tempFolder}`)
@@ -37,6 +34,13 @@ var workdir = tempFolder;
 var manifest
 var pluginDef
 
+
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
+}
+
+/*
 
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
@@ -83,4 +87,5 @@ github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_
 if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
+
 */

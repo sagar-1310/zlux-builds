@@ -329,6 +329,14 @@ class utils {
 		}
 	}
 	
+	static bumpDynamicVersion(packageFile){
+		let oldVersion = this.sh(`sed -n 's/^DYNLINK_PLUGIN_VERSION=//p' ${packageFile} `);
+		const newVersion = oldVersion + 1;
+		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
+		const newData = data.replace(`DYNLINK_PLUGIN_VERSION=${oldVersion}`, `DYNLINK_PLUGIN_VERSION=${newVersion}`)
+		fs.writeFileSync(`${packageFile}`, newData);
+	}
+	
 	static bumpPackageJson(packageFile, version){
 		if (version == '') {
             version = 'MINOR';
@@ -14368,14 +14376,11 @@ if (branch == ''){
 	branch = 'v2.x/staging'
 }
 if (version == '') {
-	console.log('helppppp')
     version = 'MINOR'
 }
 
-console.log(`${version}`)
-console.log(`${repo_name}`)
 
-/*
+
 // get temp folder for cloning
 var tempFolder = `${process.env.RUNNER_TEMP}/.tmp-npm-registry-${utils.dateTimeNow()}`
 console.log(`${tempFolder}`)
@@ -14391,6 +14396,13 @@ var workdir = tempFolder;
 var manifest
 var pluginDef
 
+
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
+}
+
+/*
 
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
@@ -14437,6 +14449,7 @@ github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_
 if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
+
 */
 })();
 
