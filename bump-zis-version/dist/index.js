@@ -329,6 +329,14 @@ class utils {
 		}
 	}
 	
+	static bumpDynamicVersion(packageFile){
+		let oldVersion =  Number(this.sh(`sed -n 's/^DYNLINK_PLUGIN_VERSION=//p' ${packageFile} `));
+		const newVersion = oldVersion + 1;
+		const data = fs.readFileSync(`${packageFile}`, {encoding:'utf8', flag:'r'});
+		const newData = data.replace(`DYNLINK_PLUGIN_VERSION=${oldVersion}`, `DYNLINK_PLUGIN_VERSION=${newVersion}`)
+		fs.writeFileSync(`${packageFile}`, newData);
+	}
+	
 	static bumpPackageJson(packageFile, version){
 		if (version == '') {
             version = 'MINOR';
@@ -14359,8 +14367,9 @@ const Debug = __nccwpck_require__(5846)
 const actionsGithub = __nccwpck_require__(6584)
 
 
-var version = core.getInput('version')
-var branch = core.getInput('branch-name')
+var version = core.getInput('VERSION')
+var branch = core.getInput('BRANCH-NAME')
+var repo_name = process.env.REPO_NAME
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
 if (branch == ''){
@@ -14369,6 +14378,8 @@ if (branch == ''){
 if (version == '') {
     version = 'MINOR'
 }
+
+
 
 // get temp folder for cloning
 var tempFolder = `${process.env.RUNNER_TEMP}/.tmp-npm-registry-${utils.dateTimeNow()}`
@@ -14386,6 +14397,7 @@ var manifest
 var pluginDef
 
 
+
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
 packageDir = envFileNames.split(' ')
@@ -14393,6 +14405,13 @@ packageDir = envFileNames.split(' ')
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpEnvVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
+}
+
+
+//bump dynamic verion
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
 }
 
 // bump manifest 
@@ -14431,6 +14450,7 @@ github.push(branch, tempFolder, actionsGithub.context.actor, process.env.GITHUB_
 if (!github.isSync(branch, tempFolder)) {
 	throw new Error('Branch is not synced with remote after npm version.')
 }
+
 })();
 
 module.exports = __webpack_exports__;

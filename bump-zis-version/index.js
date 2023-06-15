@@ -5,8 +5,9 @@ const Debug = require('debug')
 const actionsGithub = require('@actions/github')
 
 
-var version = core.getInput('version')
-var branch = core.getInput('branch-name')
+var version = core.getInput('VERSION')
+var branch = core.getInput('BRANCH-NAME')
+var repo_name = process.env.REPO_NAME
 var repo = actionsGithub.context.repo.owner + '/' + actionsGithub.context.repo.repo
 
 if (branch == ''){
@@ -15,6 +16,8 @@ if (branch == ''){
 if (version == '') {
     version = 'MINOR'
 }
+
+
 
 // get temp folder for cloning
 var tempFolder = `${process.env.RUNNER_TEMP}/.tmp-npm-registry-${utils.dateTimeNow()}`
@@ -32,6 +35,7 @@ var manifest
 var pluginDef
 
 
+
 // bump *.env 
 envFileNames = utils.findAllFiles(`${workdir}`, '*.env')
 packageDir = envFileNames.split(' ')
@@ -39,6 +43,13 @@ packageDir = envFileNames.split(' ')
 for (let i = 0; i < packageDir.length; i++){
 	utils.bumpEnvVersion(`${workdir}/${packageDir[i]}`,version)
 	console.log(utils.sh(`cat ${workdir}/${packageDir[i]}`));
+}
+
+
+//bump dynamic verion
+if (repo_name == 'zss') {
+    utils.bumpDynamicVersion(`${workdir}/build/zis.proj.env`)
+	console.log(utils.sh(`cat ${workdir}/build/zis.proj.env`));
 }
 
 // bump manifest 
