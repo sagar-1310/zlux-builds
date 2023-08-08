@@ -1,0 +1,11 @@
+name: "Publish"
+description: "This action helps publish zen"
+
+runs:
+  using: "composite"
+  steps:
+    - name: 'publish'
+      run: |
+        pwd
+        ls
+      shell: bash
