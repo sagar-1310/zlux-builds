@@ -42,17 +42,16 @@ runs:
         if [ "${{ inputs.os }}" = "windows" ];
         then
           cd squirrel.windows/x64
-          jfrog rt u zowe_enterprise_necessity-1.0.0-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/windows/zowe_enterprise_necessity-1.0.0-full.nupkg
-          jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/windows/zowe-enterprise-necessity-1.0.0\ Setup.exe
+          jfrog rt u zowe_enterprise_necessity-${ZEN_VERSION}-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe_enterprise_necessity-${ZEN_VERSION}-full.nupkg
+          jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe-enterprise-necessity-${ZEN_VERSION}\ Setup.exe
         elif [ "${{ inputs.os }}" = "macos" ];
         then
-          ls
-          jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH}/mac/zowe-enterprise-necessity-1.0.0-x64.dmg
+          jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}/mac/zowe-enterprise-necessity-${ZEN_VERSION}-x64.dmg
         elif [ "${{ inputs.os }}" = "ubuntu" ];
         then
           cd deb/x64
-          jfrog rt u zowe-enterprise-necessity_1.0.0_amd64.deb ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/unix/zowe-enterprise-necessity_1.0.0_amd64.deb
+          jfrog rt u zowe-enterprise-necessity_${ZEN_VERSION}_amd64.deb ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/unix/zowe-enterprise-necessity_${ZEN_VERSION}_amd64.deb
           cd ../../rpm/x64
-          jfrog rt u zowe-enterprise-necessity-1.0.0-1.x86_64.rpm ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/unix/zowe-enterprise-necessity-1.0.0-1.x86_64.rpm
+          jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}-1.x86_64.rpm ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/unix/zowe-enterprise-necessity-${ZEN_VERSION}-1.x86_64.rpm
         fi
       shell: bash
