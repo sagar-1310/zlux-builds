@@ -50,10 +50,9 @@ runs:
           jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/macos/zowe-enterprise-necessity-1.0.0-x64.dmg
         elif [ "${{ inputs.os }}" = "ubuntu" ];
         then
-          ls
-          cd deb/x64 
-          ls
+          cd deb/x64
+          jfrog rt u zowe-enterprise-necessity_1.0.0_amd64.deb ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/unix/zowe-enterprise-necessity_1.0.0_amd64.deb
           cd ../../rpm/x64
-          ls
+          jfrog rt u zowe-enterprise-necessity-1.0.0-1.x86_64.rpm ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/unix/zowe-enterprise-necessity-1.0.0-1.x86_64.rpm
         fi
       shell: bash
