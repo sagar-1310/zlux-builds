@@ -47,7 +47,7 @@ runs:
         elif [ "${{ inputs.os }}" = "macos" ];
         then
           ls
-          jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/macos/zowe-enterprise-necessity-1.0.0-x64.dmg
+          jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/mac/zowe-enterprise-necessity-1.0.0-x64.dmg
         elif [ "${{ inputs.os }}" = "ubuntu" ];
         then
           cd deb/x64
