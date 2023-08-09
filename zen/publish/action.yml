@@ -1,5 +1,9 @@
 name: "Publish"
 description: "This action helps publish zen"
+inputs:
+  os:
+    description: 'os'
+    required: true
 
 runs:
   using: "composite"
@@ -20,7 +24,7 @@ runs:
         if [ -f "package.json" ]
         then
           ZEN_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' )
-          echo "ZEN_VERSION=$ZOWE_VERSION" | tr -d ' ' >> $GITHUB_ENV
+          echo "ZEN_VERSION=$ZEN_VERSION" | tr -d ' ' >> $GITHUB_ENV
         else
           echo 'package.json not found'
           exit 1
@@ -38,5 +42,10 @@ runs:
         ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/zen
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         cd out/make
+        if [ "${{ inputs.build-zss }}" = "windows" ];
+        then
+          cd squirrel.windows/x64
+          jfrog rt u zowe_enterprise_necessity-1.0.0-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe_enterprise_necessity-1.0.0-full.nupkg
+          jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe-enterprise-necessity-1.0.0\ Setup.exe
         ls
       shell: bash
