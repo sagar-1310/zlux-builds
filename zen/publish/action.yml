@@ -36,14 +36,18 @@ runs:
       
     - name: 'publish'
       run: |
-        ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/zen
+        ARTIFACTORY_REPO=libs-snapshot-local/org/zowe
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         cd out/make
         if [ "${{ inputs.os }}" = "windows" ];
         then
           cd squirrel.windows/x64
-          jfrog rt u zowe_enterprise_necessity-1.0.0-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe_enterprise_necessity-1.0.0-full.nupkg
-          jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe-enterprise-necessity-1.0.0\ Setup.exe
+          jfrog rt u zowe_enterprise_necessity-1.0.0-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH}/zowe_enterprise_necessity-1.0.0-full.nupkg
+          jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH}/zowe-enterprise-necessity-1.0.0\ Setup.exe
+        elif [ "${{ inputs.os }}" = "macos" ];
+          cd zip 
+          ls
+        then 
         fi
         ls
       shell: bash
