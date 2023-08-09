@@ -39,10 +39,11 @@ runs:
         ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/zen
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         cd out/make
-        if [ "${{ inputs.build-zss }}" = "windows" ];
+        if [ "${{ inputs.os }}" = "windows" ];
         then
           cd squirrel.windows/x64
           jfrog rt u zowe_enterprise_necessity-1.0.0-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe_enterprise_necessity-1.0.0-full.nupkg
           jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH^^}/zowe-enterprise-necessity-1.0.0\ Setup.exe
+        fi
         ls
       shell: bash
