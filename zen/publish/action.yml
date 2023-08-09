@@ -46,8 +46,12 @@ runs:
           jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-{CURRENT_BRANCH}/zowe-enterprise-necessity-1.0.0\ Setup.exe
         elif [ "${{ inputs.os }}" = "macos" ];
         then
+          ls
           cd zip 
           ls 
+        elif [ "${{ inputs.os }}" = "ubuntu" ];
+        then
+          ls
         fi
         ls
       shell: bash
