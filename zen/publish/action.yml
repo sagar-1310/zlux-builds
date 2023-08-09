@@ -46,14 +46,14 @@ runs:
           jfrog rt u zowe-enterprise-necessity-1.0.0\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/windows/zowe-enterprise-necessity-1.0.0\ Setup.exe
         elif [ "${{ inputs.os }}" = "macos" ];
         then
-          jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg  ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/macos/zowe-enterprise-necessity-1.0.0-x64.dmg
+          ls
+          jfrog rt u zowe-enterprise-necessity-1.0.0-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}/macos/zowe-enterprise-necessity-1.0.0-x64.dmg
         elif [ "${{ inputs.os }}" = "ubuntu" ];
         then
           ls
-          cd deb 
+          cd deb/x64 
           ls
-          cd ../rpm
+          cd ../../rpm/x64
           ls
         fi
-        ls
       shell: bash
