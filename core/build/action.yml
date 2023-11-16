@@ -136,7 +136,7 @@ runs:
                    "manifest.yaml"
           echo "manifest is:"
           cat manifest.yaml
-          cd..
+          cd ..
         done
       shell: bash 
 
