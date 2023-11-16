@@ -129,6 +129,8 @@ runs:
         for apps in $SYSTEM_APPS
         do
           cd $apps
+          export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
+          export current_timestamp=$(date +%s%3N)
           sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
                    -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
                    -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
