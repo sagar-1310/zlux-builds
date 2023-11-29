@@ -6971,7 +6971,7 @@ class pax{
 			if (buildZSS == 'false'){
 				var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
 put ${mvdHomeDir}/zlux-build.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/zlux-build.tar
-put ${mvdHomeDir}/zowe-install-packaging/scripts/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
+put ${mvdHomeDir}/zowe-install-packaging/bin/utils/tag-files.sh ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/tag-files.sh`
 			}
 			if (buildZSS == 'true'){
 				var cmd2 = `put ${mvdHomeDir}/plugin.tar ${paxRemoteWorkspace}/${paxName}-${currentBranch}-${jclBuildNumber}/plugin.tar
