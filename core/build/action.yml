@@ -154,7 +154,7 @@ runs:
         cd dist
         tar cf ../zlux.tar -H ustar *
         cd ..
-        git clone -b feature/tag-script https://github.com/1000TurquoisePogs/zowe-install-packaging.git
+        git clone -b v1.x/master https://github.com/zowe/zowe-install-packaging.git
         export MVD_HOME_DIR=$(pwd) 
         echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
       shell: bash
