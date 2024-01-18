@@ -7005,7 +7005,7 @@ chmod +x tag-files.sh
 mkdir zss zowe-common-c 
 cd zss && tar xpoUf ../zss.tar
 chtag -R -tc ISO8859-1 * 
-cd ../zowe-common-c
+cd ../zowe-common-c && tar xpoUf ../zowe-common-c.tar
 chtag -R -tc ISO8859-1 *
 cd ../
 rm -rf zss.tar zowe-common-c.tar
@@ -7019,8 +7019,7 @@ _BPXK_AUTOCVT=ON ../tag-files.sh .
 pax -o saveext -pp -wf ../plugin.pax *
 mkdir ../zlux-build
 tar xpoUf ../zlux-build.tar
-rm ../zlux-build.tar
-_BPXK_AUTOCVT=ON ../tag-files.sh .`
+rm ../zlux-build.tar `
 			}
             utils.ssh(paxSSHHost,paxSSHPort,paxSSHUsername,paxSSHPassword,cmd3)
             console.log('[Step 3]: packaging completed')
