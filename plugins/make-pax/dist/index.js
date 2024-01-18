@@ -7006,7 +7006,7 @@ mkdir zss zowe-common-c
 cd zss && tar xpoUf ../zss.tar
 chtag -R -tc ISO8859-1 * 
 cd ../zowe-common-c
-chtag -R -tc ISO8859-1
+chtag -R -tc ISO8859-1 *
 cd ../
 rm -rf zss.tar zowe-common-c.tar
 mkdir plugin && cd plugin
