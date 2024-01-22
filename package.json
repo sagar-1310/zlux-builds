@@ -22,5 +22,8 @@
     "js-yaml": "^4.1.0",
     "semver": "^7.3.7",
     "zowe-common": "github:zowe-actions/zowe-common"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
   }
 }
