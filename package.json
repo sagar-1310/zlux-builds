@@ -24,5 +24,8 @@
     "npm-registry": "file:npm-registry",
     "semver": "^7.3.5",
     "zowe-common": "zowe-actions/zowe-common"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.38.1"
   }
 }
