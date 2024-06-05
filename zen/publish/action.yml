@@ -48,8 +48,7 @@ runs:
           echo "${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe-enterprise-necessity-${ZEN_VERSION}\ Setup.exe"
         elif [ "${{ inputs.os }}" = "macos" ];
         then
-          ls -ltr
-          jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}-x64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}/mac/zowe-enterprise-necessity-${ZEN_VERSION}-arm64.dmg
+          jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}-arm64.dmg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}/mac/zowe-enterprise-necessity-${ZEN_VERSION}-arm64.dmg
           echo "${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}/mac/zowe-enterprise-necessity-${ZEN_VERSION}-arm64.dmg"
         elif [ "${{ inputs.os }}" = "ubuntu" ];
         then
