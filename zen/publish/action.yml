@@ -42,6 +42,7 @@ runs:
         if [ "${{ inputs.os }}" = "windows" ];
         then
           cd squirrel.windows/x64
+          ls
           jfrog rt u zowe_enterprise_necessity-${ZEN_VERSION}-full.nupkg ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe_enterprise_necessity-${ZEN_VERSION}-full.nupkg
           jfrog rt u zowe-enterprise-necessity-${ZEN_VERSION}\ Setup.exe ${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe-enterprise-necessity-${ZEN_VERSION}\ Setup.exe
           echo "${ARTIFACTORY_REPO}/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}/windows/zowe_enterprise_necessity-${ZEN_VERSION}-full.nupkg"
