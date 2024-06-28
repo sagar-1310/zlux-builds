@@ -4,6 +4,9 @@ inputs:
   os:
     description: 'os'
     required: true
+  perform-release:
+    description: 'perform-release'
+    required: true
 
 runs:
   using: "composite"
