@@ -42,7 +42,7 @@ runs:
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
         if [ "$input.release" = true ]; then
           ARTIFACTORY_REPO=libs-release-local/org/zowe/${REPOSITORY_NAME}/${ZEN_VERSION}
-        elif [ "${{ inputs.os }}" = "macos" ];
+        elif [ "${{ inputs.os }}" = "macos" ]; then
           ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}
         else
           ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH^^}-${JFROG_CLI_BUILD_NUMBER}
