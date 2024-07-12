@@ -40,8 +40,8 @@ runs:
     - name: 'publish'
       run: |
         TIMESTAMP=`date +%Y%m%d.%H%M%S`
-        echo  "${{ input.release }}" 
-        if [ "${{ input.release }}" = true ]; then
+        echo  "${{ input.perform-release }}" 
+        if [ "${{ input.perform-release }}" = true ]; then
           ARTIFACTORY_REPO=libs-release-local/org/zowe/${REPOSITORY_NAME}/${ZEN_VERSION}
         elif [ "${{ inputs.os }}" = "macos" ]; then
           ARTIFACTORY_REPO=libs-snapshot-local/org/zowe/${REPOSITORY_NAME}/${ZEN_VERSION}-${CURRENT_BRANCH:u}-${JFROG_CLI_BUILD_NUMBER}
