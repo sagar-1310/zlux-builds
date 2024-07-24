@@ -36,7 +36,7 @@ var workdir = tempFolder;
 
 
 // bump package.json 
-utils.bumpPackageVersion(`${workdir}/package.json`,version)
+utils.bumpPackageJson(`${workdir}/package.json`,version)
 console.log(utils.sh(`cat ${workdir}/package.json `));
 newVersion = utils.getNewVersion(`${workdir}/package.json`)
 
