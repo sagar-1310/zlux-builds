@@ -22,7 +22,7 @@ runs:
         ls
         git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-platform.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-build.git -b users/jstruga/v3-plugin-enhancement
+        git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
         if ${{ inputs.build-zss }}
         then 
           git clone https://github.com/zowe/zss.git -b $DEFAULT_PLUGIN_BRANCH 
