@@ -87,6 +87,7 @@ runs:
       run: |
         cd ../zlux/zlux-build 
         ant removeSource
+        ant cleanupPlugins
       shell: bash
       
     - name: 'package tar'
