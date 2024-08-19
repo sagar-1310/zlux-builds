@@ -86,6 +86,7 @@ runs:
     - name: 'remove source code'
       run: |
         cd ../zlux/zlux-build 
+        ant removeSource
         cd ../$REPOSITORY_NAME/web
         find . -type f -name '*.map*' -exec rm {} \;
         #!/bin/bash
