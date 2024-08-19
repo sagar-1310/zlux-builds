@@ -89,10 +89,14 @@ runs:
         ant removeSource
         cd ../$REPOSITORY_NAME/web
         find . -type f -name '*.map*' -exec rm {} \;
-        #!/bin/bash
         if [ -f "main.js.gz" ]; then
-          echo "main.js.gz exists. Deleting main.js..."
-          rm "main.js"
+          echo "main.js.gz exists."
+          if [ -f "main.js" ]; then
+            rm "main.js"
+            echo "main.js has been deleted."
+          else
+            echo "main.js does not exist. Nothing to delete."
+          fi
         else
           echo "main.js.gz does not exist."
         fi
