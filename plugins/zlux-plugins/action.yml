@@ -14,7 +14,7 @@ runs:
         cd ..
         export MVD_HOME_DIR=$(pwd) 
         echo MVD_HOME_DIR=$(pwd) >> $GITHUB_ENV
-        git clone -b v3.x/master https://github.com/1000TurquoisePogs/zowe-install-packaging.git
+        git clone -b v2.x/master https://github.com/1000TurquoisePogs/zowe-install-packaging.git
         npm config set registry https://zowe.jfrog.io/zowe/api/npm/npm-release/
         mkdir zlux
         cp -rf $REPOSITORY_NAME zlux/
@@ -22,7 +22,7 @@ runs:
         ls
         git clone https://github.com/zowe/zlux-app-manager.git -b $DEFAULT_PLUGIN_BRANCH
         git clone https://github.com/zowe/zlux-platform.git -b $DEFAULT_PLUGIN_BRANCH
-        git clone https://github.com/zowe/zlux-build.git -b users/jstruga/v3-plugin-enhancement
+        git clone https://github.com/zowe/zlux-build.git -b $DEFAULT_PLUGIN_BRANCH
         if ${{ inputs.build-zss }}
         then 
           git clone https://github.com/zowe/zss.git -b $DEFAULT_PLUGIN_BRANCH 
@@ -86,8 +86,15 @@ runs:
     - name: 'remove source code'
       run: |
         cd ../zlux/zlux-build 
-        ant removeSource
-        ant cleanupPlugins
+        cd ../$REPOSITORY_NAME/web
+        find . -type f -name '*.map*' -exec rm {} \;
+        #!/bin/bash
+        if [ -f "main.js.gz" ]; then
+          echo "main.js.gz exists. Deleting main.js..."
+          rm "main.js"
+        else
+          echo "main.js.gz does not exist."
+        fi
       shell: bash
       
     - name: 'package tar'
