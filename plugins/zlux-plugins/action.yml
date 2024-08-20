@@ -85,39 +85,28 @@ runs:
           fi
         done
       shell: bash
-    
-    - name: 'remove source code'
-      run: |
-        cd ../zlux/zlux-build 
-        ant removeSource
-        cd ../$REPOSITORY_NAME/web
-        find . -type f -name '*.map*' -exec rm {} \;
-        if [ -f "main.js.gz" ]; then
-          echo "main.js.gz exists."
-          if [ -f "main.js" ]; then
-            rm "main.js"
-            echo "main.js has been deleted."
-          else
-            echo "main.js does not exist. Nothing to delete."
-          fi
-        else
-          echo "main.js.gz does not exist."
-        fi
-      shell: bash
       
     - name: 'clone previous version'
-      run: |
-        
-      shell: bash
       run: |
         if ${{ inputs.clone-v2 }}
         then 
           mkdir -p ../zlux/oldv2
           cd ../zlux/oldv2
           git clone https://github.com/zowe/$REPOSITORY_NAME.git -b v2.x/master
-          cp -rf $REPOSITORY_NAME/web ../$REPOSITORY_NAME/web
+          cp -rf $REPOSITORY_NAME/web/* ../$REPOSITORY_NAME/web
         fi
-      
+      shell: bash
+    
+    - name: 'remove source code'
+      run: |
+        cd ../zlux/zlux-build 
+        ant removeSource
+        cd ../$REPOSITORY_NAME/web
+        find . -type f -name '*.map.*' -exec rm {} \;
+        find . -type f -name '*.map' -exec rm {} \;
+        find . -name "*.gz" -exec sh -c 'name=${1%???}; if [ -f "$name" ]; then; rm "$name"; fi;' - {} \;
+      shell: bash
+            
     - name: 'package tar'
       run: |
         cd ../zlux/$REPOSITORY_NAME && tar cf ../../plugin.tar -H ustar *
