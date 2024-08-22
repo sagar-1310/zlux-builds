@@ -94,8 +94,8 @@ runs:
         else
           echo "not angular"
         fi
-        echo "$inputs.clone-v2"
-        if [ "$inputs.clone-v2" ]; then
+        echo "${{ inputs.clone-v2 }}"
+        if [ "${{ inputs.clone-v2 }}" ]; then
           mkdir -p ../zlux/oldv2
           cd ../zlux/oldv2
           git clone https://github.com/zowe/$REPOSITORY_NAME.git -b v2.x/master
