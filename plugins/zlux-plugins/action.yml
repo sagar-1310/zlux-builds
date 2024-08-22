@@ -91,15 +91,14 @@ runs:
         framework_value=$(cat ../$REPOSITORY_NAME/pluginDefinition.json | grep -oP '"framework":\s*"\K[^"]+')
         if [ "$framework_value" = "angular" ]; then
           echo "this is angular plugin"
+          if [ "${{ inputs.clone-v2 }}" ]; then
+            mkdir -p ../zlux/oldv2
+            cd ../zlux/oldv2
+            git clone https://github.com/zowe/$REPOSITORY_NAME.git -b v2.x/master
+            cp -rf $REPOSITORY_NAME/web/* ../$REPOSITORY_NAME/web
+          fi
         else
           echo "not angular"
-        fi
-        echo "${{ inputs.clone-v2 }}"
-        if [ "${{ inputs.clone-v2 }}" ]; then
-          mkdir -p ../zlux/oldv2
-          cd ../zlux/oldv2
-          git clone https://github.com/zowe/$REPOSITORY_NAME.git -b v2.x/master
-          cp -rf $REPOSITORY_NAME/web/* ../$REPOSITORY_NAME/web
         fi
       shell: bash
     
