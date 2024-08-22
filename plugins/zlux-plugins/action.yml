@@ -89,7 +89,7 @@ runs:
     - name: 'clone previous version'
       run: |
         framework_value=$(cat ../$REPOSITORY_NAME/pluginDefinition.json | grep -oP '"framework":\s*"\K[^"]+')
-        if [ "$framework_value" = "angular" ]; then
+        if [[ "$framework_value" == "angular" || "$framework_value" == "angular2" ]]; then
           echo "this is angular plugin"
           if [ "${{ inputs.clone-v2 }}" ]; then
             mkdir -p ../zlux/oldv2
