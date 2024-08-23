@@ -167,6 +167,27 @@ runs:
         ant -Dcapstone=../../dist removeSource
       shell: bash 
       
+    - name: 'clone v2'
+      run: | 
+        mkdir clone && cd clone
+        git clone https://github.com/zowe/zowe-install-packaging.git -b v2.x/master
+        ZOWE_V2_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[",]//g')
+        ZLUX_CORE_PAX_V2=$(cat zowe-install-packaging/manifest.json.template  \
+          | grep '"org.zowe.zlux.zlux-core": {' -A 10 \
+          | grep '"artifact":' \
+          | grep -m 1 '"artifact":' \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[", ]//g'
+          | sed 's/\.pax$/.tar/')
+        curl https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2} -k -o zlux.tar
+        tar xpoUf zlux.tar 
+        cp -rf zlux-app-manager ../zlux/zlux-app-manager-v2
+      shell: bash
+      
     - name: 'package'
       run: |
         chmod +x dist/zlux-build/*.sh

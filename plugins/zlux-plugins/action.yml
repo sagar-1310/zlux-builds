@@ -95,6 +95,14 @@ runs:
             mkdir -p ../zlux/oldv2
             cd ../zlux/oldv2
             git clone https://github.com/zowe/$REPOSITORY_NAME.git -b v2.x/master
+            packages=$(find ./${REPOSITORY_NAME} -name package.json | { grep -v node_modules || true; })
+            for package in $packages
+            do
+              if [ $(node -e "const fs = require('fs'); const pac = JSON.parse(fs.readFileSync('${package}')); if (pac.scripts && pac.scripts.build) { console.log('true')};") = "true" ]
+              then
+                sh -c "cd `dirname $package` && npm ci && npm run build "
+              fi
+            done
             cp -rf $REPOSITORY_NAME/web/* ../$REPOSITORY_NAME/web
           fi
         else
