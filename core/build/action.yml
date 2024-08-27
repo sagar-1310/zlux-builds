@@ -188,7 +188,7 @@ runs:
         cd zlux-app-manager/system-apps
         for app_folder in */
         do 
-          cp -rf $app_folder/web/* ../../../zlux-app-manager/system-apps/$app_folderweb
+          cp -rf ${app_folder}/web/* ../../../zlux-app-manager/system-apps/${app_folder}web
         done
         cd ../..
         mv zlux-app-manager ../zlux/zlux-app-manager-v2
