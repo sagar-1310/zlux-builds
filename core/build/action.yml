@@ -177,6 +177,7 @@ runs:
           | head -1 \
           | awk -F: '{ print $2 }' \
           | sed 's/[",]//g')
+        echo "v2 version=$ZOWE_V2_VERSION"
         ZLUX_CORE_PAX_V2=$(cat zowe-install-packaging/manifest.json.template  \
           | grep '"org.zowe.zlux.zlux-core": {' -A 10 \
           | grep '"artifact":' \
@@ -184,12 +185,13 @@ runs:
           | awk -F: '{ print $2 }' \
           | sed 's/[", ]//g'
           | sed 's/\.pax$/.tar/')
+        echo "v2 pax=$ZLUX_CORE_PAX_V2"
         curl https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2} -k -o zlux.tar
         tar xpoUf zlux.tar 
         cd zlux-app-manager/system-apps
         for app_folder in */
         do 
-          cp -rf ${app_folder}/web/* ../../../zlux-app-manager/system-apps/${app_folder}web
+          cp -rf ${app_folder}/web/* ../../../zlux-app-manager/system-apps/${app_folder}/web
         done
         cd ../..
         mv zlux-app-manager ../zlux/zlux-app-manager-v2
