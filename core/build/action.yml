@@ -129,6 +129,7 @@ runs:
         for app_folder in */; 
         do 
           cd $app_folder
+          echo "In $app_folder"
           export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
           export current_timestamp=$(date +%s%3N)
           sed -i -e "s|{{build\\.branch}}|v3.x/staging|g" \
