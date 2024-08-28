@@ -28,12 +28,12 @@ runs:
     - name: 'checkout'
       run: |
         mkdir zlux && cd zlux
-        git clone https://github.com/zowe/zlux-app-manager.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-app-server.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-build.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-platform.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-server-framework.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-shared.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-app-manager.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-app-server.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-build.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-platform.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-server-framework.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-shared.git -b v3.x/staging
         
         if [ -n "${{ github.event.pull_request.number }}" ]
         then
