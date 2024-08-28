@@ -189,13 +189,11 @@ runs:
         cd zlux-app-manager/system-apps
         for app_folder in */
         do 
-          echo "destination:"
-          ls -ltr ../../../zlux/zlux-app-manager/system-apps/${app_folder}
-          cp -rvf ${app_folder}web/* ../../../zlux/zlux-app-manager/system-apps/${app_folder}web
+          cp -rvf ${app_folder}web/* ../../../dist/zlux-app-manager/system-apps/${app_folder}web
         done
         cd ../..
-        mv zlux-app-manager ../zlux/zlux-app-manager-v2
-        cd ../zlux/zlux-app-manager-v2 && rm -rf bootstrap virtual-desktop/lib system-apps
+        mv zlux-app-manager ../dist/zlux-app-manager-v2
+        cd ../dist/zlux-app-manager-v2 && rm -rf bootstrap virtual-desktop/lib system-apps
         cd ../../zlux-app-manager/system-apps && find . -type f -name '*.map' -exec rm {} \;
       shell: bash
       
