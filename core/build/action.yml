@@ -193,10 +193,10 @@ runs:
           echo "copy from ${app_folder}web/"
           ls -ltr ${app_folder}
           echo "to ../../../zlux-app-manager/system-apps/${app_folder}web"
-          ls -ltr ../../../zlux-app-manager/system-apps
+          ls -ltr ../../../zlux/lux-app-manager/system-apps
           echo "destination:"
-          ls -ltr ../../../zlux-app-manager/system-apps/${app_folder}
-          cp -rvf ${app_folder}web/* ../../../zlux-app-manager/system-apps/${app_folder}web
+          ls -ltr ../../../zlux/zlux-app-manager/system-apps/${app_folder}
+          cp -rvf ${app_folder}web/* ../../../zlux/zlux-app-manager/system-apps/${app_folder}web
         done
         cd ../..
         mv zlux-app-manager ../zlux/zlux-app-manager-v2
