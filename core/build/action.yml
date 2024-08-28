@@ -28,12 +28,12 @@ runs:
     - name: 'checkout'
       run: |
         mkdir zlux && cd zlux
-        git clone https://github.com/zowe/zlux-app-manager.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-app-server.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-build.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-platform.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-server-framework.git -b $CURRENT_BRANCH
-        git clone https://github.com/zowe/zlux-shared.git -b $CURRENT_BRANCH
+        git clone https://github.com/zowe/zlux-app-manager.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-app-server.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-build.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-platform.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-server-framework.git -b v3.x/staging
+        git clone https://github.com/zowe/zlux-shared.git -b v3.x/staging
         
         if [ -n "${{ github.event.pull_request.number }}" ]
         then
@@ -106,38 +106,39 @@ runs:
           echo "Set version to:"
           cat version.properties
           cd ../zlux-app-server
-          if [ -e "manifest.yaml" ]; then
-            export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
-            export current_timestamp=$(date +%s%3N)
-            export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
-            echo $commit_hash
-            echo $current_timestamp
-            sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
-                   -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
-                   -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
-                   -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
-                   -e "s|{{build\\.version}}|${ZOWE_VERSION}|g" \
-                   "manifest.yaml"
-            echo "manifest is:"
-            cat manifest.yaml
-          fi
+          export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
+          export current_timestamp=$(date +%s%3N)
+          export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
+          echo $commit_hash
+          echo $current_timestamp
+          sed -i -e "s|{{build\\.branch}}|v3.x/staging|g" \
+                -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
+                -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
+                -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
+                -e "s|{{build\\.version}}|${ZOWE_VERSION}|g" \
+               "manifest.yaml"
+          echo "manifest is:"
+          cat manifest.yaml
       shell: bash  
     
     - name: 'set system apps version'
       run: |
         cd zlux/zlux-app-manager/system-apps
-        for apps in $SYSTEM_APPS
-        do
-          cd $apps
-          export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
-          export current_timestamp=$(date +%s%3N)
-          sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
-                   -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
-                   -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
-                   -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
-                   "manifest.yaml"
-          echo "manifest is:"
-          cat manifest.yaml
+        for app_folder in */; 
+        do 
+          cd $app_folder
+          if [ -e "manifest.yaml" ]; then
+            echo "In $app_folder"
+            export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
+            export current_timestamp=$(date +%s%3N)
+            sed -i -e "s|{{build\\.branch}}|v3.x/staging|g" \
+                     -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
+                     -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
+                     -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
+                     "manifest.yaml"
+            echo "manifest is:"
+            cat manifest.yaml
+          fi
           cd ..
         done
       shell: bash 
@@ -166,6 +167,35 @@ runs:
         cd zlux/zlux-build 
         ant -Dcapstone=../../dist removeSource
       shell: bash 
+      
+    - name: 'clone v2'
+      run: | 
+        mkdir clone && cd clone
+        git clone https://github.com/zowe/zowe-install-packaging.git -b v2.x/master
+        ZOWE_V2_VERSION=$(cat zowe-install-packaging/manifest.json.template  \
+          | grep version \
+          | head -1 \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[", ]//g')
+        ZLUX_CORE_PAX_V2=$(cat zowe-install-packaging/manifest.json.template  \
+          | grep '"org.zowe.zlux.zlux-core": {' -A 10 \
+          | grep '"artifact":' \
+          | grep -m 1 '"artifact":' \
+          | awk -F: '{ print $2 }' \
+          | sed 's/[", ]//g' \
+          | sed 's/\.pax$/.tar/')
+        curl "https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2}" -k -o zlux.tar
+        tar xpoUf zlux.tar 
+        cd zlux-app-manager/system-apps
+        for app_folder in */
+        do 
+          cp -rvf ${app_folder}web/* ../../../dist/zlux-app-manager/system-apps/${app_folder}web
+        done
+        cd ../..
+        mv zlux-app-manager ../dist/zlux-app-manager-v2
+        cd ../dist/zlux-app-manager-v2 && rm -rf bootstrap virtual-desktop/lib system-apps
+        cd ../zlux-app-manager/system-apps && find . -type f -name '*.map' -exec rm {} \;
+      shell: bash
       
     - name: 'package'
       run: |
