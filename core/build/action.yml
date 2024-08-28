@@ -112,7 +112,7 @@ runs:
             export zlux_version="${majorVersion}.${minorVersion}.${microVersion}"
             echo $commit_hash
             echo $current_timestamp
-            sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
+            sed -i -e "s|{{build\\.branch}}|v3.x/staging|g" \
                    -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
                    -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
                    -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
@@ -131,7 +131,7 @@ runs:
           cd $app_folder
           export commit_hash=$(git rev-parse --short "$GITHUB_SHA")
           export current_timestamp=$(date +%s%3N)
-          sed -i -e "s|{{build\\.branch}}|${CURRENT_BRANCH}|g" \
+          sed -i -e "s|{{build\\.branch}}|v3.x/staging|g" \
                    -e "s|{{build\\.number}}|${JFROG_CLI_BUILD_NUMBER}|g" \
                    -e "s|{{build\\.commitHash}}|${commit_hash}|g" \
                    -e "s|{{build\\.timestamp}}|${current_timestamp}|g" \
