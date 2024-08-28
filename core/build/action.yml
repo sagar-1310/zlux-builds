@@ -176,8 +176,7 @@ runs:
           | grep version \
           | head -1 \
           | awk -F: '{ print $2 }' \
-          | sed 's/[",]//g' \ 
-          | xargs)
+          | sed 's/[", ]//g')
         ZLUX_CORE_PAX_V2=$(cat zowe-install-packaging/manifest.json.template  \
           | grep '"org.zowe.zlux.zlux-core": {' -A 10 \
           | grep '"artifact":' \
