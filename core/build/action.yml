@@ -183,7 +183,7 @@ runs:
           | grep '"artifact":' \
           | grep -m 1 '"artifact":' \
           | awk -F: '{ print $2 }' \
-          | sed 's/[", ]//g'
+          | sed 's/[", ]//g' \
           | sed 's/\.pax$/.tar/')
         echo "v2 pax=$ZLUX_CORE_PAX_V2"
         curl https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2} -k -o zlux.tar
