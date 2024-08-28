@@ -187,15 +187,9 @@ runs:
         curl "https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2}" -k -o zlux.tar
         tar xpoUf zlux.tar 
         cd zlux-app-manager/system-apps
-        echo "PWD is $PWD"
         for app_folder in */
         do 
-          echo "copy from ${app_folder}web/"
-          ls -ltr ${app_folder}
-          echo "to ../../../zlux/zlux-app-manager/system-apps/${app_folder}web"
-          ls -ltr ../../../zlux/zlux-app-manager/system-apps
           echo "destination:"
-          ls -ltr ../../../
           ls -ltr ../../../zlux/zlux-app-manager/system-apps/${app_folder}
           cp -rvf ${app_folder}web/* ../../../zlux/zlux-app-manager/system-apps/${app_folder}web
         done
