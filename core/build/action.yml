@@ -193,7 +193,7 @@ runs:
         done
         cd ../..
         mv zlux-app-manager ../dist/zlux-app-manager-v2
-        cd ../dist/zlux-app-manager-v2 && rm -rf bootstrap virtual-desktop/lib system-apps
+        cd ../dist/zlux-app-manager-v2 && rm -rf bootstrap system-apps
         cd ../zlux-app-manager/system-apps && find . -type f -name '*.map' -exec rm {} \;
       shell: bash
       
