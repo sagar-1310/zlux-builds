@@ -127,7 +127,7 @@ runs:
         cd ../$REPOSITORY_NAME/web
         find . -type f -name '*.map.*' -exec rm {} \;
         find . -type f -name '*.map' -exec rm {} \;
-        find . -name "*.gz" -exec sh -c 'name=${1%???}; if [ -f "$name" ]; then; rm "$name"; fi;' - {} \;
+        find . -name "*.gz" -exec sh -c 'name=${1%???}; if [ -f "$name" ]; then; rm "$name"; fi' - {} \;
       shell: bash
             
     - name: 'package tar'
