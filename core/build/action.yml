@@ -186,12 +186,6 @@ runs:
           | sed 's/\.pax$/.tar/')
         curl "https://zowe.jfrog.io/zowe/list/libs-snapshot-local/org/zowe/zlux/zlux-core/${ZOWE_V2_VERSION}-RC/${ZLUX_CORE_PAX_V2}" -k -o zlux.tar
         tar xpoUf zlux.tar 
-        cd zlux-app-manager/system-apps
-        for app_folder in */
-        do 
-          cp -rvf ${app_folder}web/* ../../../dist/zlux-app-manager/system-apps/${app_folder}web
-        done
-        cd ../..
         mv zlux-app-manager ../dist/zlux-app-manager-v2
         cd ../dist/zlux-app-manager-v2 && rm -rf bootstrap system-apps
         cd ../zlux-app-manager/system-apps && find . -type f -name '*.map' -exec rm {} \;
