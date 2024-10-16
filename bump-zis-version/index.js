@@ -14,7 +14,7 @@ if (branch == ''){
 	branch = 'v2.x/staging'
 }
 if (version == '') {
-    version = 'MINOR'
+    version = 'PATCH'
 }
 
 

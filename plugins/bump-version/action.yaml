@@ -7,7 +7,7 @@ inputs:
   version:
     description: 'which version level needed to bump version, eg. npm version patch'
     required: false
-    default: 'minor'
+    default: 'patch'
 
 runs:
   using: 'node12'
